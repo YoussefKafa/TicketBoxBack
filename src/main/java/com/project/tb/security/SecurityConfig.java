@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         "/**/*.js"
     ).permitAll()
     .antMatchers(SIGN_UP_URL).permitAll()
+    .antMatchers(STADIUM_URL).permitAll() //to be deleted
+    .antMatchers(ADMIN_URL).permitAll() //to be deleted
     .anyRequest().authenticated();
 http.addFilterBefore(authinticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

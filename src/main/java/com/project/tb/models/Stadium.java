@@ -1,5 +1,4 @@
 package com.project.tb.models;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -7,19 +6,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.*;
 @Entity
-class Stadium {
+public
+class Stadium extends AuditModel{
     @Id
     @GeneratedValue
-    Long stadiumID;
+    private  Long stadiumId;
 @NotBlank(message = "Name cannot be blank")
-@Size(min=2,max=5,message="name must be between 2 to 5 characters")
-String name;
+private String name;
 @NotBlank(message = "city cannot be blank: team city is required")
-String city;
+private String city;
 @Lob
-@Column(name="image", nullable=false, columnDefinition="mediumblob") //medium is 16mb
-private byte[] image;
+@Column(name="image", nullable=true, columnDefinition="mediumblob") //medium is 16mb
+private String image;
+public Long getStadiumId() {
+	return stadiumId;
+}
 
+public void setStadiumId(Long stadiumId) {
+	this.stadiumId = stadiumId;
+}
 public String getName() {
     return this.name;
 }
@@ -35,11 +40,11 @@ public void setCity(String city) {
     this.city = city;
 }
 
-public byte[] getImage() {
+public String getImage() {
     return this.image;
 }
 
-public void setImage(byte[] image) {
+public void setImage(String image) {
     this.image = image;
 }
 }

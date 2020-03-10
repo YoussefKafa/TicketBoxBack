@@ -1,20 +1,30 @@
 package com.project.tb.models;
-
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Lob;
-
-public class Ticket {
+import javax.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+@Entity
+public class Ticket extends AuditModel{
+	 @Id
+	    @GeneratedValue
 private Long id;
+	 @OneToOne
+	 @JoinColumn(name="gameId")
 private Game game;
 private int price;
 private String section;
 private boolean returnable;
 private Date returnDate;
-@Lob
-@Column(name="QRcode", nullable=false, columnDefinition="mediumblob") //medium is 16mb
-private byte[] QRcode;
+@ManyToOne(fetch = FetchType.LAZY, optional = false)
+@JoinColumn(name = "userId", nullable = false)
+@OnDelete(action = OnDeleteAction.CASCADE)
+private User user;
+public User getUser() {
+	return user;
+}
+public void setUser(User user) {
+	this.user = user;
+}
 public Long getId() {
 	return id;
 }

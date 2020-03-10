@@ -1,29 +1,24 @@
 package com.project.tb.models;
-
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 //ManyToMany with Tickets
 @Entity
-public class User implements UserDetails { // user details take care of user security and password things
+public class User extends AuditModel implements UserDetails { // user details take care of user security and password things
     public User() {
     }
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     @NotBlank(message = "Please enter your full name")
     private String name;
@@ -35,19 +30,6 @@ public class User implements UserDetails { // user details take care of user sec
     private String password;
     @Transient // make sure it matches with password before persiste our user
     private String confirmPassword;
-    @Lob
-    @Column(name="image", nullable=false, columnDefinition="mediumblob") //medium is 16mb
-    private byte[] image;
-    private Date createdAt;
-    private Date updatedAt;
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = new Date();
-    }
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = new Date();
-    }
 
     public Long getUserId() {
         return this.id;
@@ -80,29 +62,12 @@ public class User implements UserDetails { // user details take care of user sec
     public void setPassword(String password) {
         this.password = password;
     }
-
     public String getConfirmPassword() {
         return this.confirmPassword;
     }
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
-    }
-
-    public Date getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return this.updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     @Override

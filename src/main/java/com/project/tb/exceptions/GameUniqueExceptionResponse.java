@@ -1,6 +1,5 @@
 package com.project.tb.exceptions;
-
-public class TeamUniqueExceptionResponse {
+public class GameUniqueExceptionResponse {
 	 private String name;
 		public String getName() {
 		return name;
@@ -8,7 +7,7 @@ public class TeamUniqueExceptionResponse {
 	public void setName(String name) {
 		this.name = name;
 	}
-		public TeamUniqueExceptionResponse(String name) {
+		public GameUniqueExceptionResponse(String name) {
 	        this.name=name;
 	    }
 }

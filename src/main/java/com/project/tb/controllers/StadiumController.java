@@ -2,6 +2,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,36 +10,40 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.validation.BindingResult;
-import com.project.tb.models.Team;
-import com.project.tb.services.TeamServices;
+import com.project.tb.models.Stadium;
 import java.util.List;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
+import com.project.tb.services.StadiumServices;
 @RestController
-@RequestMapping("/api/team")
-class TeamController{
-@Autowired
-private TeamServices teamService;
+@RequestMapping("/api/stadium")
+class StadiumController{
 @Autowired
 private MapValidationErrorService mapvalidationErrorService;
+@Autowired
+private StadiumServices stadiumService;
 @PostMapping("/save")
-public ResponseEntity<?> save(@Valid @RequestBody Team team, BindingResult result){
+public ResponseEntity<?> addStadium(@Valid @RequestBody Stadium stadium, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
       if (errorMap!=null) return errorMap;
-    Team team1=teamService.saveOrUpdate(team);
-return new ResponseEntity<Team>(team,HttpStatus.CREATED);
+    Stadium stadium2=stadiumService.saveOrUpdate(stadium);
+return new ResponseEntity<Stadium>(stadium,HttpStatus.CREATED);
 }
 @GetMapping("/findAll")
-public List<Team> allTeams() {
-	return teamService.findAll();
+public List<Stadium> allStadiums() {
+	return stadiumService.findAll();
 }
 @GetMapping("/count")
 public Long count() {
-    return teamService.count();
+    return stadiumService.count();
+}
+//if necessary, team can use it
+@DeleteMapping("/deleteByName/{name}")
+public void deleteByName(@PathVariable String name) {
+	stadiumService.deleteByName(name);
 }
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
-	teamService.deleteById(id);
+	stadiumService.deleteById(id);
 }
 }

@@ -7,21 +7,27 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
+
+import com.project.tb.exceptions.EmployeeUniqueException;
+import com.project.tb.models.Employee;
 import com.project.tb.models.User;
 import com.project.tb.payload.JWTLoginSucesResponse;
 import com.project.tb.payload.LoginRequest;
 import com.project.tb.security.JwtTokenProvider;
 import com.project.tb.services.UserServices;
 import com.project.tb.validator.UserValidator;
-
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import static com.project.tb.security.SecurityConstants.TOKEN_PREFIX;
+import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin
@@ -36,6 +42,7 @@ class UserController{
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
     private AuthenticationManager authenticationManager;
+   //tested
     @PostMapping("/login")
     public ResponseEntity<?> authinticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result){
     	ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
@@ -48,12 +55,38 @@ class UserController{
     	String jwt=TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
     	return ResponseEntity.ok(new JWTLoginSucesResponse(true, jwt));
     }
-@PostMapping("/register")
+    //tested
+@PostMapping("/save")
 public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
 userValidator.validate(user, result);
 ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
 if (errorMap!=null) return errorMap;
 User user1=userService.saveUser(user);
 return new ResponseEntity<User>(user,HttpStatus.CREATED);
+}
+//tested
+@GetMapping("/findAll")
+public List<User> allUsers() {
+	return userService.findAll();
+}
+//tested
+@GetMapping("/count")
+public Long count() {
+    return userService.count();
+}
+//tested
+@DeleteMapping("/deleteById/{userId}")
+public ResponseEntity<?> deleteEmployeeById(@PathVariable String userId){
+	User user=userService.findById(Long.parseLong(userId));
+	if (user ==null) {
+		throw new EmployeeUniqueException("User with id : " + userId + " does not exist");
+	}
+  userService.deleteById(Long.parseLong(userId));
+  return new ResponseEntity<String>("User with id " + userId+ " was deleted", HttpStatus.OK);
+}
+@DeleteMapping("/deleteAll")
+public ResponseEntity<?> deleteAll(){
+	userService.deleteAll();
+  return new ResponseEntity<String>("All Users were deleted", HttpStatus.OK);
 }
 }

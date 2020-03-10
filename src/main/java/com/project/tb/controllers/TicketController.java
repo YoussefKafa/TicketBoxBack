@@ -10,35 +10,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
-import com.project.tb.models.Team;
-import com.project.tb.services.TeamServices;
+import com.project.tb.models.Ticket;
+import com.project.tb.services.TicketServices;
 import java.util.List;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 @RestController
-@RequestMapping("/api/team")
-class TeamController{
+@RequestMapping("/api/ticket")
+class TicketController{
 @Autowired
-private TeamServices teamService;
+private TicketServices ticketService;
 @Autowired
 private MapValidationErrorService mapvalidationErrorService;
 @PostMapping("/save")
-public ResponseEntity<?> save(@Valid @RequestBody Team team, BindingResult result){
+public ResponseEntity<?> save(@Valid @RequestBody Ticket ticket, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
       if (errorMap!=null) return errorMap;
-    Team team1=teamService.saveOrUpdate(team);
-return new ResponseEntity<Team>(team,HttpStatus.CREATED);
+    Ticket ticket1=ticketService.saveOrUpdate(ticket);
+return new ResponseEntity<Ticket>(ticket,HttpStatus.CREATED);
 }
 @GetMapping("/findAll")
-public List<Team> allTeams() {
-	return teamService.findAll();
+public List<Ticket> allTickets() {
+	return ticketService.findAll();
 }
 @GetMapping("/count")
 public Long count() {
-    return teamService.count();
+    return ticketService.count();
 }
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
-	teamService.deleteById(id);
+	ticketService.deleteById(id);
 }
 }
