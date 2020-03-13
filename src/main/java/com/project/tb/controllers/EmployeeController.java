@@ -42,10 +42,12 @@ return new ResponseEntity<Employee>(employee,HttpStatus.OK);
 public List<Employee> allEmployees() {
 	return employeeService.findAll();
 }
+//tested
 @GetMapping("/count")
 public Long count() {
     return employeeService.count();
 }
+//tested
 @DeleteMapping("/deleteById/{empId}")
 public ResponseEntity<?> deleteEmployeeById(@PathVariable String empId){
 	Employee employee=employeeService.findById(Long.parseLong(empId));
@@ -55,6 +57,7 @@ public ResponseEntity<?> deleteEmployeeById(@PathVariable String empId){
   employeeService.deleteById(Long.parseLong(empId));
   return new ResponseEntity<String>("Employee with id " + empId + " was deleted", HttpStatus.OK);
 }
+//tested
 @DeleteMapping("/deleteAll")
 public ResponseEntity<?> deleteAll(){
 	employeeService.deleteAll();
