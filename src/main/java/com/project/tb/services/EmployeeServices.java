@@ -17,7 +17,7 @@ public class EmployeeServices{
         try {
             return employeeRepo.save(employee);
         } catch (final Exception e) {
-            throw new GameUniqueException("Employee  "+ employee.getName()+ " is already exists");
+            throw new GameUniqueException("Employee  "+ employee.getEmail()+ " is already exists");
         }
         
     }
