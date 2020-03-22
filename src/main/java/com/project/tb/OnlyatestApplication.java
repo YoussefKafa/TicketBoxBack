@@ -12,6 +12,7 @@ public class OnlyatestApplication {
 	BCryptPasswordEncoder bCryptPasswordEncoder(){
 		//we've created this bean here so we can autowired it with user services
 		return new BCryptPasswordEncoder();}
+	//testing
 	public static void main(String[] args) {
 		SpringApplication.run(OnlyatestApplication.class, args);
 	}
