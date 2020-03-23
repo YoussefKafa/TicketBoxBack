@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import com.project.tb.exceptions.EmployeeUniqueException;
 import com.project.tb.models.Employee;
 import com.project.tb.services.EmployeeServices;
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/admin/**", maxAge = 3600)
 @RequestMapping("/api/employee")
 class EmployeeController{
 @Autowired

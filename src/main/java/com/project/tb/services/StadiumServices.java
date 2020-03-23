@@ -19,8 +19,8 @@ public class StadiumServices{
         
     }
     public List<Stadium> findAll() {
-        var it = stadiumRepo.findAll();
-        var stadiums = new ArrayList<Stadium>();
+        Iterable<Stadium> it = stadiumRepo.findAll();
+        ArrayList<Stadium> stadiums = new ArrayList<Stadium>();
         it.forEach(e -> stadiums.add(e));
         return stadiums;
     }

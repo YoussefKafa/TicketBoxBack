@@ -22,8 +22,8 @@ public class EmployeeServices{
         
     }
     public ArrayList<Employee> findAll() {
-        var it = employeeRepo.findAll();
-        var employees = new ArrayList<Employee>();
+        Iterable<Employee> it = employeeRepo.findAll();
+        ArrayList<Employee> employees = new ArrayList<Employee>();
         it.forEach(e -> employees.add(e));
         return employees;
     }

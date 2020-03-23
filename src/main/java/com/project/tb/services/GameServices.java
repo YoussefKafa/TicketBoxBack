@@ -14,13 +14,13 @@ public class GameServices{
         try {
             return gameRepo.save(game);
         } catch (final Exception e) {
-            throw new GameUniqueException("Game  "+ game.getId()+ " is already exists");
+            throw new GameUniqueException(e.getMessage());
         }
         
     }
     public List<Game> findAll() {
-        var it = gameRepo.findAll();
-        var games = new ArrayList<Game>();
+        Iterable<Game> it = gameRepo.findAll();
+        ArrayList<Game> games = new ArrayList<Game>();
         it.forEach(e -> games.add(e));
         return games;
     }

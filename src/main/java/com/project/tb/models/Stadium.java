@@ -2,9 +2,16 @@ package com.project.tb.models;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public
 class Stadium extends AuditModel{
@@ -18,6 +25,18 @@ private String city;
 @Lob
 @Column(name="image", nullable=true, columnDefinition="mediumblob") //medium is 16mb
 private String image;
+@OneToMany(mappedBy = "stadium")
+private List<Game> games = new ArrayList<Game>();
+///////////////////////
+///////////////////////
+public List<Game> getGames() {
+	return games;
+}
+
+public void setGames(List<Game> games) {
+	this.games = games;
+}
+
 public Long getStadiumId() {
 	return stadiumId;
 }

@@ -19,8 +19,8 @@ public class TeamServices{
         
     }
     public List<Team> findAll() {
-        var it = teamRepo.findAll();
-        var teams = new ArrayList<Team>();
+        Iterable<Team> it = teamRepo.findAll();
+        ArrayList<Team> teams = new ArrayList<Team>();
         it.forEach(e -> teams.add(e));
         return teams;
     }

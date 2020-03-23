@@ -6,4 +6,5 @@ import com.project.tb.models.*;
 
 @Repository
 public interface GameRepo extends CrudRepository <Game , Long>{
+	public Game getById(Long id);
 }

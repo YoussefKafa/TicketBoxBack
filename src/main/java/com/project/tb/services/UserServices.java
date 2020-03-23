@@ -11,6 +11,7 @@ import com.project.tb.dao.*;
 import com.project.tb.exceptions.EmployeeUniqueException;
 import com.project.tb.exceptions.UserUniqueException;
 import com.project.tb.models.Employee;
+import com.project.tb.models.TicketsList;
 import com.project.tb.models.User;
 
 @Service
@@ -19,15 +20,32 @@ public class UserServices {
 	private UserRepo userRepo;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; // comes with spring security
-
-	public User saveUser(User newUser) {
+@Autowired
+private TicketsListRepo ticketsListRepo;
+	public User saveUser(User user) {
 		try {
-			newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword())); // encode the password
-			newUser.setConfirmPassword(""); // to prevent it from appearing in json
+			user.setUserIdentifier(user.getUserIdentifier());
+			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); // encode the password
+			user.setConfirmPassword(""); // to prevent it from appearing in json
 			// for the one above also we can use @jsonIgnore in User class
-			return userRepo.save(newUser);
+			//create a ticketslist every time you save or update a user
+			//if the user is new then create the list
+			if(user.getId()==null) {
+			TicketsList ticketsList=new TicketsList();
+			//set the relationship
+			user.setTicketsList(ticketsList);
+			ticketsList.setUser(user);
+			ticketsList.setUserIdentifier(user.getUserIdentifier());
+			}
+			//and this is what to do if 
+			//we are updating a user 
+			//so the ticketslist will not be null
+			if (user.getId()!=null) {
+				user.setTicketsList(ticketsListRepo.findByUserIdentifier(user.getUserIdentifier()));
+			}
+			return userRepo.save(user);
 		} catch (final Exception e) {
-			throw new UserUniqueException("User email:   " + newUser.getEmail().toLowerCase() + " is already exists");
+			throw new UserUniqueException("User email:   " + user.getEmail().toLowerCase() + " is already exists");
 		}
 //the happy path first
 //email has to be unique (custom exception)
@@ -36,8 +54,8 @@ public class UserServices {
 	}
 //tested
 	public List<User> findAll() {
-		var it = userRepo.findAll();
-		var users = new ArrayList<User>();
+		Iterable<User> it = userRepo.findAll();
+		ArrayList<User> users = new ArrayList<User>();
 		it.forEach(e -> users.add(e));
 		return users;
 	}
