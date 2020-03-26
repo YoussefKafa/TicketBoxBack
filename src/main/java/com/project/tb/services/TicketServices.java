@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.TicketRepo;
 import com.project.tb.exceptions.TicketUniqueException;
-import com.project.tb.models.Game;
 import com.project.tb.models.Ticket;
-import com.project.tb.models.TicketsList;
 @Service
 public class TicketServices {
 	    @Autowired
