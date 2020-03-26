@@ -3,28 +3,61 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.*;
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "name")
+        }
+)
 public
 class Stadium extends AuditModel{
     @Id
     @GeneratedValue
     private  Long stadiumId;
+    @Transient
+    Date defaultDate = new Date(2020, 20, 20); 
 @NotBlank(message = "Name cannot be blank")
 private String name;
 @NotBlank(message = "city cannot be blank: team city is required")
 private String city;
 @Lob
 @Column(name="image", nullable=true, columnDefinition="mediumblob") //medium is 16mb
-private String image;
+private String image="0";
 @OneToMany(mappedBy = "stadium")
 private List<Game> games = new ArrayList<Game>();
+@Column(nullable = true, updatable = true, unique = false)
+private int capacity=0;
+@Column(nullable = true, updatable = true, unique = false)
+private Date opened=defaultDate;
 ///////////////////////
 ///////////////////////
+public int getCapacity() {
+	return capacity;
+}
+
+public void setCapacity(int capacity) {
+	this.capacity = capacity;
+}
+
+public Date getOpened() {
+	return opened;
+}
+
+public void setOpened(Date opened) {
+	this.opened = opened;
+}
+
 public List<Game> getGames() {
 	return games;
 }
