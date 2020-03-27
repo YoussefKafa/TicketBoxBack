@@ -17,4 +17,8 @@ public interface StadiumRepo extends CrudRepository <Stadium , Long>{
 	@Modifying
 	@Query("UPDATE Stadium s set s.name = ?1 where s.stadiumId = ?2")
 	void updateStadiumNameById(String name, Long id);
+	@Transactional
+	 @Query(value = "SELECT stadium_id FROM Stadium p WHERE p.name=name",nativeQuery = true)
+	String getIdByName(@Param("name") String name);
+	Stadium findByName(@Param("name") String name);
 }

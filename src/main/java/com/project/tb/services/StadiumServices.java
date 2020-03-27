@@ -1,6 +1,8 @@
 package com.project.tb.services;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
@@ -39,4 +41,11 @@ public class StadiumServices{
     public void deleteByName(String name) {
         stadiumRepo.deleteByName(name);
      }
+    public String getIdByName(String name) {
+        return  stadiumRepo.getIdByName(name);
+       }
+    public Optional<Stadium> findByName(String name) {
+        Optional<Stadium> resultStadium=stadiumRepo.findById(Long.parseLong(stadiumRepo.getIdByName(name)) );
+        return resultStadium;
+       }
 }

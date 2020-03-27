@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.tb.models.Stadium;
 import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import com.project.tb.services.StadiumServices;
@@ -45,5 +47,13 @@ public void deleteByName(@PathVariable String name) {
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
 	stadiumService.deleteById(id);
+}
+@GetMapping("/getIdByName/{name}")
+public String getIdByName(@PathVariable String name) {
+    return stadiumService.getIdByName(name);
+}
+@GetMapping("/findByName/{name}")
+public Optional<Stadium> findByName(@PathVariable String name) {
+    return stadiumService.findByName(name);
 }
 }
