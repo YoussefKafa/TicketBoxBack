@@ -2,9 +2,7 @@ package com.project.tb.models;
 
 import java.util.Collection;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,18 +11,25 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.UniqueConstraint;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //ManyToMany with Tickets
 //OneToOne with TicketsList
 @Entity
-//user details take care of user security and password														// things
-public class User extends AuditModel{ 
-
+//user details take care of user security and password	// things
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email")
+        }
+)
+public class User extends AuditModel implements UserDetails{ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -41,6 +46,7 @@ public class User extends AuditModel{
     @PrePersist
     protected void onCreate() {
     	this.createdAt=new Date();
+    	this.updatedAt=new Date();
     }
     @PreUpdate
     protected void OnUpdate() {
@@ -121,5 +127,41 @@ public class User extends AuditModel{
 
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+	@Override
+	@JsonIgnore
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	@JsonIgnore
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	@JsonIgnore
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	@Override
+	@JsonIgnore
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

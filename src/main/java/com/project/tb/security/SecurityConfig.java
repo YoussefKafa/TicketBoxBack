@@ -48,8 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     .exceptionHandling().authenticationEntryPoint(unathorizedHandler)
     .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     .and()
-    .headers().frameOptions().sameOrigin()
-    .and()
+    //don't authorize the following requests
     .authorizeRequests()
     .antMatchers(
         "/",
@@ -63,14 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         "/**/*.js"
     ).permitAll()
     .antMatchers(SIGN_UP_URL).permitAll()
-    .antMatchers(STADIUM_URL).permitAll() //to be deleted
-    .antMatchers(ADMIN_URL).permitAll() //to be deleted
-    .antMatchers(GAME_URL).permitAll()
-    .antMatchers(EMPLOYEE_URL).permitAll()
+    .antMatchers(STADIUM_URL).permitAll()
     .antMatchers(TEAM_URL).permitAll()
-    .antMatchers(TICKET_URL).permitAll()
-    //to be deleted
+    .antMatchers(LOGIN_URL).permitAll()
     .anyRequest().authenticated();
-http.addFilterBefore(authinticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

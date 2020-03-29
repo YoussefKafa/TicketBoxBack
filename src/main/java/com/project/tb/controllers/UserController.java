@@ -57,7 +57,7 @@ class UserController{
     }
     //tested
 @PostMapping("/save")
-public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
+public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) throws Exception{
 userValidator.validate(user, result);
 ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
 if (errorMap!=null) return errorMap;

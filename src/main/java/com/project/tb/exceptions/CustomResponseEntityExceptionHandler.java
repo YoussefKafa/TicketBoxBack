@@ -11,19 +11,13 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler{
     @ExceptionHandler
-    public final ResponseEntity<Object> handleTeamUniqueException(UserUniqueException ex, WebRequest req){
-        TeamUniqueExceptionResponse teamUniqueExceptionResponse=new TeamUniqueExceptionResponse(ex.getMessage());
-        return new ResponseEntity(teamUniqueExceptionResponse,HttpStatus.BAD_REQUEST);
-
-    }
-    @ExceptionHandler
-    public final ResponseEntity<Object> handleUserUniqueException(TeamUniqueException ex, WebRequest req){
+    public final ResponseEntity<Object> handleUserUniqueException(UserUniqueException ex, WebRequest req){
         UserUniqueExceptionResponse userUniqueExceptionResponse=new UserUniqueExceptionResponse(ex.getMessage());
         return new ResponseEntity(userUniqueExceptionResponse,HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
-    public final ResponseEntity<Object> handleStadiumUniqueException(StadiumUniqueException ex, WebRequest req){
-        StadiumUniqueExceptionResponse stadiumUniqueExceptionResponse=new StadiumUniqueExceptionResponse(ex.getMessage());
-        return new ResponseEntity(stadiumUniqueExceptionResponse,HttpStatus.BAD_REQUEST);
+    public final ResponseEntity<Object> SomeThingWentWrongException(SomeThingWentWrong ex, WebRequest req){
+    	SomeThingWentWrongResponse someThingWentWrongResponse=new SomeThingWentWrongResponse(ex.getMessage());
+        return new ResponseEntity(someThingWentWrongResponse,HttpStatus.BAD_REQUEST);
     }
 }

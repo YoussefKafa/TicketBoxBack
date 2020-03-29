@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
     @Override
     public void commence(HttpServletRequest arg0, HttpServletResponse arg1, AuthenticationException arg2)
             throws IOException, ServletException {
@@ -24,7 +23,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
       arg1.setContentType("application/json");
       arg1.setStatus(401);
       arg1.getWriter().print(jsonLoginResponse);
-    } // we use the entry point to make sure that the user is authorized
+    } // we use the entry point to make sure that the user knows that he is authorized
 
 
 }

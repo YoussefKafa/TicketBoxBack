@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
+import com.project.tb.exceptions.SomeThingWentWrong;
 import com.project.tb.exceptions.UserUniqueException;
 import com.project.tb.models.TicketsList;
 import com.project.tb.models.User;
+import com.sun.istack.FinalArrayList;
 
 @Service
 public class UserServices {
@@ -20,7 +22,7 @@ public class UserServices {
 	@Autowired
 	private TicketsListRepo ticketsListRepo;
 
-	public User saveUser(User user) {
+	public User saveUser(User user) throws Exception {
 		try {
 			user.setUserIdentifier(user.getUserIdentifier());
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); // encode the password
@@ -42,7 +44,7 @@ public class UserServices {
 				user.setTicketsList(ticketsListRepo.findByUserIdentifier(user.getUserIdentifier()));
 			}
 			return userRepo.save(user);
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			throw new UserUniqueException("User email:   " + user.getEmail().toLowerCase() + " is already exists");
 		}
 //the happy path first

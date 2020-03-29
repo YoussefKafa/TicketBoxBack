@@ -1,6 +1,7 @@
 package com.project.tb.security;
 public class SecurityConstants {
-public static final String SIGN_UP_URL = "/api/users/**";
+public static final String SIGN_UP_URL = "/api/users/save";
+public static final String LOGIN_URL = "/api/users/login";
 public static final String STADIUM_URL = "/api/stadium/**";
 public static final String GAME_URL = "/api/game/**";
 public static final String ADMIN_URL = "/admin/**";

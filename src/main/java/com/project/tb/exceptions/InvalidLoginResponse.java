@@ -1,18 +1,18 @@
 package com.project.tb.exceptions;
 public class InvalidLoginResponse{
-    private String name;
+    private String email;
     private String password;
     public InvalidLoginResponse(){
-        //we put the name and password as invalid so we dont give the hacker a hint
-        this.name="invalid name";
-        this.password="invalid password";
+        //we put the email and password as invalid so we dont give the hacker a hint
+        this.email="Invalid email";
+        this.password="Invalid Password";
     }
-    public String getName() {
-        return this.name;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
