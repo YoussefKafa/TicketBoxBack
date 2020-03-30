@@ -61,4 +61,7 @@ public class StadiumServices<E>{
         Optional<Stadium> resultStadium=stadiumRepo.findById(Long.parseLong(stadiumRepo.getIdByName(name)) );
         return resultStadium;
        }
+	public Optional<Stadium> findById(Long id) {
+		return stadiumRepo.findById(id);
+	}
 }

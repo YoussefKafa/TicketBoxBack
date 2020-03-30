@@ -58,4 +58,8 @@ public String getIdByName(@PathVariable String name) {
 public Optional<Stadium> findByName(@PathVariable String name) {
     return stadiumService.findByName(name);
 }
+@GetMapping("/findById/{id}")
+public Optional<Stadium> findByName(@PathVariable Long id) {
+    return stadiumService.findById(id);
+}
 }
