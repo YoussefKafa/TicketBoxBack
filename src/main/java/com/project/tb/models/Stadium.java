@@ -11,8 +11,11 @@ import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.validation.constraints.*;
 @Entity
 @Table(
@@ -24,6 +27,7 @@ public
 class Stadium extends AuditModel{
     @Id
     @GeneratedValue
+    @Basic(fetch = FetchType.LAZY)
     private  Long stadiumId;
     @Transient
     Date defaultDate = new Date(2020, 20, 20); 

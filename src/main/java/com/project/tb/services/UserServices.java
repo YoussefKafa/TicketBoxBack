@@ -47,10 +47,6 @@ public class UserServices {
 		} catch (Exception e) {
 			throw new UserUniqueException("User email:   " + user.getEmail().toLowerCase() + " is already exists");
 		}
-//the happy path first
-//email has to be unique (custom exception)
-//make sure that password and confirmed password match
-//don't persist or show the confirm password
 	}
 
 //tested

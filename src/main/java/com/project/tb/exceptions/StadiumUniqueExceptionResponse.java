@@ -1,5 +1,4 @@
 package com.project.tb.exceptions;
-
 public class StadiumUniqueExceptionResponse {
 	 private String name;
 		public String getName() {
