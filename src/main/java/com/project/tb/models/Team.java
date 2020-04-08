@@ -7,11 +7,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.validation.constraints.*;
@@ -23,10 +21,7 @@ public class Team extends AuditModel implements Serializable{
 @GeneratedValue
 @Column(name = "TEAM_ID", unique = true, nullable = false)
 private Long id;
-@NotBlank(message = "Name cannot be blank")
-@Size(min=2,max=5,message="name must be between 2 to 5 characters")
 private String name;
-@NotBlank(message = "city cannot be blank: team city is required")
 private String city;
 @Lob
 @Column(name="image", nullable=false, columnDefinition="mediumblob") //medium is 16mb
