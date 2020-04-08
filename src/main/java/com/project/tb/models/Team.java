@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,19 +20,25 @@ import javax.validation.constraints.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Team extends AuditModel implements Serializable{
+	@Transient
+	private String defaultCountryString  = "Unknown";
+	
+	
 @Id
 @GeneratedValue
 @Column(name = "TEAM_ID", unique = true, nullable = false)
 private Long id;
 private String name;
 private String city;
+private String country=defaultCountryString;
 @Lob
 @Column(name="image", nullable=false, columnDefinition="mediumblob") //medium is 16mb
-private byte[] image;
+private String image;
 @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teams")
 @JsonIgnore
 private Set<Game> games = new HashSet<Game>(0);
-
+/////////////////////////
+///////////////////////////
 	public Set<Game> getGames() {
 	return games;
 }
@@ -67,11 +74,11 @@ public void setGames(Set<Game> games) {
         this.city = city;
     }
    
-    public byte[] getImage() {
+    public String getImage() {
         return this.image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
     
