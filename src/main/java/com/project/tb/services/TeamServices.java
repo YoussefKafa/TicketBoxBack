@@ -1,6 +1,8 @@
 package com.project.tb.services;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
@@ -36,4 +38,7 @@ public class TeamServices{
     public void deleteAll(Team team) {
         teamRepo.delete(team);
      }
+    public Optional<Team> findById(Long id) {
+		return teamRepo.findById(id);
+	}
 }

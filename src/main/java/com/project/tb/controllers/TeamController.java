@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
+
+import com.project.tb.models.Stadium;
 import com.project.tb.models.Team;
 import com.project.tb.services.TeamServices;
 import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 @RestController
@@ -40,5 +44,9 @@ public Long count() {
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
 	teamService.deleteById(id);
+}
+@GetMapping("/findById/{id}")
+public Optional<Team> findByName(@PathVariable Long id) {
+    return teamService.findById(id);
 }
 }
