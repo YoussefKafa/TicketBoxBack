@@ -1,6 +1,8 @@
 package com.project.tb.services;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
@@ -12,7 +14,13 @@ public class GameServices{
     private GameRepo gameRepo;
     public Game saveOrUpdate(final Game game) {
         try {
-            return gameRepo.save(game);
+        	if(game.getId()==null)
+                return gameRepo.save(game);
+            	else {
+            	Optional<Game> newgame=gameRepo.findById(game.getId());
+            	game.setTeams(newgame.get().getTeams());
+            	return gameRepo.save(game);
+            		}
         } catch (final Exception e) {
             throw new GameUniqueException(e.getMessage());
         }
@@ -33,7 +41,7 @@ public class GameServices{
     public void deleteAll() {
         gameRepo.deleteAll();
      }
-    public void deleteAll(Game game) {
-        gameRepo.delete(game);
-     }
+	public Optional<Game> findById(Long id) {
+		return gameRepo.findById(id);
+	}
 }

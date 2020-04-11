@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.tb.models.Game;
 import com.project.tb.models.Stadium;
 import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import com.project.tb.services.GameServices;
@@ -42,5 +44,9 @@ public Long count() {
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
 	gameService.deleteById(id);
+}
+@GetMapping("/findById/{id}")
+public Optional<Game> findByName(@PathVariable Long id) {
+    return gameService.findById(id);
 }
 }

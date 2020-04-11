@@ -65,6 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     .antMatchers(STADIUM_URL).permitAll()
     .antMatchers(TEAM_URL).permitAll()
     .antMatchers(LOGIN_URL).permitAll()
+    .antMatchers(TICKET_URL).permitAll()
+    .antMatchers(GAME_URL).permitAll()
     .anyRequest().authenticated();
     }
 }
