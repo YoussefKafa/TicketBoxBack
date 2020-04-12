@@ -49,4 +49,8 @@ public void deleteById(@PathVariable Long id) {
 public Optional<Game> findByName(@PathVariable Long id) {
     return gameService.findById(id);
 }
+@PostMapping("/addTeam/{gameId}/{teamId}")
+public void addTeam(@PathVariable Long gameId, @PathVariable Long teamId) {
+	 gameService.addTeam(gameId, teamId);
+}
 }

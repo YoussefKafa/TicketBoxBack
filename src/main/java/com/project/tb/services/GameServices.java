@@ -44,4 +44,7 @@ public class GameServices{
 	public Optional<Game> findById(Long id) {
 		return gameRepo.findById(id);
 	}
+	public void addTeam(Long gameId, Long teamId) {
+		gameRepo.addTeam(gameId, teamId);
+	}
 }
