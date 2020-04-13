@@ -41,6 +41,7 @@ private String city;
 @Column(name="image", nullable=true, columnDefinition="mediumblob") //medium is 16mb
 private String image="0";
 @OneToMany(mappedBy = "stadium")
+@JsonIgnore
 private List<Game> games = new ArrayList<Game>();
 @Column(nullable = true, updatable = true, unique = false)
 private int capacity=0;
