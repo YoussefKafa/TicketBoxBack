@@ -37,7 +37,7 @@ public class Game extends AuditModel implements Serializable {
 					nullable = false, updatable = false) })
 	private Set<Team> teams = new HashSet<Team>(0);
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_stadium", nullable = false, updatable = false)
+	@JoinColumn(name = "fk_stadium", nullable = true, updatable = true)
 	@JsonIgnore
 	private Stadium stadium;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")

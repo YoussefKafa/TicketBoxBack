@@ -53,4 +53,8 @@ public Optional<Game> findByName(@PathVariable Long id) {
 public void addTeam(@PathVariable Long gameId, @PathVariable Long teamId) {
 	 gameService.addTeam(gameId, teamId);
 }
+@PostMapping("/addStadium/{gameId}/{stadiumId}")
+public void addStadium(@PathVariable Long gameId,@PathVariable Long stadiumId) {
+	 gameService.addStadium(gameId,stadiumId);
+}
 }

@@ -12,6 +12,8 @@ import com.project.tb.exceptions.GameUniqueException;
 public class GameServices{
     @Autowired
     private GameRepo gameRepo;
+    @Autowired
+    private StadiumRepo stadiumRepo;
     public Game saveOrUpdate(final Game game) {
         try {
         	if(game.getId()==null)
@@ -46,5 +48,8 @@ public class GameServices{
 	}
 	public void addTeam(Long gameId, Long teamId) {
 		gameRepo.addTeam(gameId, teamId);
+	}
+	public void addStadium(Long gameId,Long stadiumId) {
+		gameRepo.addStadium(gameId,stadiumId);
 	}
 }

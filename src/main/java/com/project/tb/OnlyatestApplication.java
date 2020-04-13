@@ -13,7 +13,6 @@ public class OnlyatestApplication {
 		// we've created this bean here so we can autowired it with user services
 		return new BCryptPasswordEncoder();
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(OnlyatestApplication.class, args);
 	}

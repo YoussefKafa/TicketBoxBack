@@ -18,4 +18,8 @@ public interface GameRepo extends CrudRepository <Game , Long>{
 		@Modifying
 		@Query(value="INSERT INTO game_teams (game_id, team_id) VALUES (:gameId, :teamId)",nativeQuery = true)
 		void addTeam(@Param("gameId")Long gameId,@Param("teamId") Long teamId);
+	 @Transactional
+		@Modifying
+		@Query(value="UPDATE game SET fk_stadium=:stadiumId where game_id=:gameId",nativeQuery = true)
+		void addStadium(@Param("gameId") Long gameId,@Param("stadiumId") Long stadiumId);
 }
