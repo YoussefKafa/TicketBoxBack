@@ -22,4 +22,12 @@ public interface GameRepo extends CrudRepository <Game , Long>{
 		@Modifying
 		@Query(value="UPDATE game SET fk_stadium=:stadiumId where game_id=:gameId",nativeQuery = true)
 		void addStadium(@Param("gameId") Long gameId,@Param("stadiumId") Long stadiumId);
+	 @Transactional
+		@Modifying
+		@Query(value="DELETE from game_teams where game_id=:gameId",nativeQuery = true)
+	void deleteTeams(@Param("gameId") Long gameId);
+	 @Transactional
+		@Modifying
+		@Query(value="DELETE from game_teams where game_id=:gameId AND team_Id=:teamId",nativeQuery = true)
+	void deleteTeam(@Param("gameId") Long gameId,@Param("teamId") Long teamId);
 }

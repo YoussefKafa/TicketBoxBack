@@ -57,4 +57,12 @@ public void addTeam(@PathVariable Long gameId, @PathVariable Long teamId) {
 public void addStadium(@PathVariable Long gameId,@PathVariable Long stadiumId) {
 	 gameService.addStadium(gameId,stadiumId);
 }
+@DeleteMapping("/deleteTeams/{gameId}")
+public void deleteTeams(@PathVariable Long gameId) {
+	gameService.deleteTeams(gameId);
+}
+@DeleteMapping("/deleteTeam/{gameId}/{teamId}")
+public void deleteTeam(@PathVariable Long gameId,@PathVariable Long teamId) {
+	 gameService.deleteTeam(gameId,teamId);
+}
 }

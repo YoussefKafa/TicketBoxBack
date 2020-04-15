@@ -52,4 +52,12 @@ public class GameServices{
 	public void addStadium(Long gameId,Long stadiumId) {
 		gameRepo.addStadium(gameId,stadiumId);
 	}
+	public void deleteTeams(Long gameId) {
+		gameRepo.deleteTeams(gameId);
+		
+	}
+	public void deleteTeam(Long gameId, Long teamId) {
+		gameRepo.deleteTeam(gameId,teamId);
+		
+	}
 }
