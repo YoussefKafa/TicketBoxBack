@@ -34,7 +34,7 @@ private String country=defaultCountryString;
 @Lob
 @Column(name="image", nullable=false, columnDefinition="mediumblob") //medium is 16mb
 private String image;
-@ManyToMany(fetch = FetchType.LAZY, mappedBy = "teams")
+@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "teams")
 @JsonIgnore
 private Set<Game> games = new HashSet<Game>(0);
 /////////////////////////
