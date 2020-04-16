@@ -30,13 +30,13 @@ public class Game extends AuditModel implements Serializable {
 	@Column(name = "GAME_ID", unique = true, nullable = false)
 	private Long id;
 	private String gameIdentifier;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "game_teams", joinColumns = { 
 			@JoinColumn(name = "GAME_ID", nullable = false, updatable = false) }, 
 			inverseJoinColumns = { @JoinColumn(name = "TEAM_ID", 
 					nullable = false, updatable = false) })
 	private Set<Team> teams = new HashSet<Team>(0);
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_stadium", nullable = true, updatable = true)
 	private Stadium stadium;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
