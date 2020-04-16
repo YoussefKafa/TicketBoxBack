@@ -75,13 +75,13 @@ public class Game extends AuditModel implements Serializable {
 	public void setGameIdentifier(String gameIdentifier) {
 		this.gameIdentifier = gameIdentifier;
 	}
-	private Date deadLine;
+	private  String deadLine;
 
-	public Date getDeadLine() {
+	public String getDeadLine() {
 		return deadLine;
 	}
 
-	public void setDeadLine(Date deadLine) {
+	public void setDeadLine(String deadLine) {
 		this.deadLine = deadLine;
 	}
 
