@@ -54,8 +54,10 @@ public void addTeam(@PathVariable Long gameId, @PathVariable Long teamId) {
 	 gameService.addTeam(gameId, teamId);
 }
 @PostMapping("/addStadium/{gameId}/{stadiumId}")
-public void addStadium(@PathVariable Long gameId,@PathVariable Long stadiumId) {
+public ResponseEntity<?> addStadium(@PathVariable Long gameId,@PathVariable Long stadiumId) {
 	 gameService.addStadium(gameId,stadiumId);
+	 Optional<Game> game=gameService.findById(gameId);
+	 return new ResponseEntity<Game>(game.get(),HttpStatus.CREATED);
 }
 @DeleteMapping("/deleteTeams/{gameId}")
 public void deleteTeams(@PathVariable Long gameId) {
