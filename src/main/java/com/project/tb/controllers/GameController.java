@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.tb.dao.GameRepo;
 import com.project.tb.models.Game;
 import com.project.tb.models.Stadium;
 import java.util.List;
@@ -27,19 +28,20 @@ class GameController{
 private MapValidationErrorService mapvalidationErrorService;
 @Autowired
 private GameServices gameService;
+@Autowired
+private GameRepo gameRepo;
 @PostMapping("/save")
 public ResponseEntity<?> addGame(@Valid @RequestBody Game game, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
       if (errorMap!=null) return errorMap;
+  	System.out.println(game.toString()+" ---------------------------");
     Game game2=gameService.saveOrUpdate(game);
 return new ResponseEntity<Game>(game,HttpStatus.CREATED);
 }
 @PutMapping("/save")
-public ResponseEntity<?> updateGame(@Valid @RequestBody Game game, BindingResult result){
-      ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
-      if (errorMap!=null) return errorMap;
+public void updateGame(@Valid @RequestBody Game game, BindingResult result){
+	System.out.println(game.toString()+" ++++++++++++++++++++++++++++++++++++++++++++++==");
     Game game2=gameService.saveOrUpdate(game);
-return new ResponseEntity<Game>(game,HttpStatus.CREATED);
 }
 @GetMapping("/findAll")
 public List<Game> allGames() {

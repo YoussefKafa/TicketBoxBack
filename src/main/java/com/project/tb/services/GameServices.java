@@ -17,12 +17,14 @@ public class GameServices{
     public Game saveOrUpdate(final Game game) {
         try {
         	if(game.getId()==null)
-                return gameRepo.save(game);
-            	else {
-            	Optional<Game> newgame=gameRepo.findById(game.getId());
-            	game.setTeams(newgame.get().getTeams());
-            	return gameRepo.save(game);
-            		}
+        return	gameRepo.save(game);
+        	else  {
+				Optional<Game> game1=findById(game.getId());
+				Game game2=game1.get();
+			game.setStadium(game2.getStadium());
+			game.setGameIdentifier(game2.getGameIdentifier());
+			return gameRepo.save(game);
+			}
         } catch (final Exception e) {
             throw new GameUniqueException(e.getMessage());
         }

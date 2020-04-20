@@ -27,8 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Game extends AuditModel implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
-	
+	@Column(name = "game_id",unique = true, nullable = false)
 	private Long id;
 	private String gameIdentifier;
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -39,15 +38,22 @@ public class Game extends AuditModel implements Serializable {
 	private Set<Team> teams = new HashSet<Team>(0);
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_stadium", nullable = true, updatable = true)
-	//@JsonIgnore
+	@JsonIgnore
 	private Stadium stadium;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
 	private List<Ticket> tickets = new ArrayList<>();
 	///////////////
 ///////////
+	
 
 	public List<Ticket> getTickets() {
 		return tickets;
+	}
+
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", gameIdentifier=" + gameIdentifier + ", teams=" + teams + ", stadium=" + stadium
+				+ ", tickets=" + tickets + ", deadLine=" + deadLine + "]";
 	}
 
 	public void setTickets(List<Ticket> tickets) {
