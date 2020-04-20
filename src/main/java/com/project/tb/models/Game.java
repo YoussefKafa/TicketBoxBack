@@ -27,7 +27,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Game extends AuditModel implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "GAME_ID", unique = true, nullable = false)
+	@Column(unique = true, nullable = false)
+	
 	private Long id;
 	private String gameIdentifier;
 	@ManyToMany(fetch = FetchType.LAZY)

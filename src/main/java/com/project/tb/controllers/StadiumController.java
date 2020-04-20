@@ -32,6 +32,7 @@ public ResponseEntity<?> addStadium(@Valid @RequestBody Stadium stadium, Binding
     Stadium stadium2=stadiumService.saveOrUpdate(stadium);
 return new ResponseEntity<Stadium>(stadium,HttpStatus.CREATED);
 }
+
 @GetMapping("/findAll")
 public List<Stadium> allStadiums() {
 	return stadiumService.findAll();
