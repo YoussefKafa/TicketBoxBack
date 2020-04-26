@@ -32,9 +32,6 @@ private String country=defaultCountryString;
 @Lob
 @Column(name="image", nullable=false, columnDefinition="mediumblob") //medium is 16mb
 private String image;
-@ManyToMany(fetch = FetchType.LAZY, mappedBy = "teams")
-@JsonIgnore
-private Set<Game> games = new HashSet<Game>(0);
 /////////////////////////
 ///////////////////////////
 public String getCountry() {
@@ -44,14 +41,6 @@ public String getCountry() {
 public void setCountry(String country) {
 	this.country = country;
 }
-	public Set<Game> getGames() {
-	return games;
-}
-
-public void setGames(Set<Game> games) {
-	this.games = games;
-}
-
 	/* getters
     and
   setters */

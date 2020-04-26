@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,21 +31,23 @@ public class Game extends AuditModel implements Serializable {
 	@Column(name = "game_id",unique = true, nullable = false)
 	private Long id;
 	private String gameIdentifier;
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "game_teams", joinColumns = { 
-			@JoinColumn(name = "GAME_ID", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "TEAM_ID", 
-					nullable = false, updatable = false) })
-	private Set<Team> teams = new HashSet<Team>(0);
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_stadium", nullable = true, updatable = true)
 	//@JsonIgnore
 	private Stadium stadium;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
 	private List<Ticket> tickets = new ArrayList<>();
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "game")
+	private GameTeams gameTeams;
 	///////////////
 ///////////
-	
+	public GameTeams getGameTeams() {
+		return gameTeams;
+	}
+
+	public void setGameTeams(GameTeams gameTeams) {
+		this.gameTeams = gameTeams;
+	}
 
 	public List<Ticket> getTickets() {
 		return tickets;
@@ -52,7 +55,7 @@ public class Game extends AuditModel implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", gameIdentifier=" + gameIdentifier + ", teams=" + teams + ", stadium=" + stadium
+		return "Game [id=" + id + ", gameIdentifier=" + gameIdentifier + " stadium=" + stadium
 				+ ", tickets=" + tickets + ", deadLine=" + deadLine + "]";
 	}
 
@@ -67,15 +70,6 @@ public class Game extends AuditModel implements Serializable {
 	public void setStadium(Stadium stadium) {
 		this.stadium = stadium;
 	}
-
-	public Set<Team> getTeams() {
-		return teams;
-	}
-
-	public void setTeams(Set<Team> teams) {
-		this.teams = teams;
-	}
-
 	public String getGameIdentifier() {
 		return gameIdentifier;
 	}

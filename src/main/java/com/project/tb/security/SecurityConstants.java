@@ -8,6 +8,7 @@ public static final String ADMIN_URL = "/admin/**";
 public static final String EMPLOYEE_URL = "/api/employee/**";
 public static final String TEAM_URL = "/api/team/**";
 public static final String TICKET_URL = "/api/ticket/**";
+public static final String GAMETEAMS_URL = "/api/gameTeams/**";
 public static final String SECRET = "SecretKeyToGenJWTs";
 public static final String TOKEN_PREFIX = "Bearer "; //"Give the bearer of this token access".
 public static final String HEADER_STRING = "Authorization";
