@@ -1,6 +1,7 @@
 package com.project.tb.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -48,6 +49,11 @@ public class GameTeamsController {
 	@GetMapping("/findAll")
 	public List<GameTeams> allGameTeams() {
 		return gameTeamsServices.findAll();
+	}
+	@GetMapping("/findByGameId/{game_id}")
+	public ResponseEntity<?>  findByGameId(@PathVariable Long game_id) {
+	 Optional<GameTeams> gameTeams= gameTeamsServices.findByGameId(game_id);
+		return new ResponseEntity<GameTeams>(gameTeams.get(),HttpStatus.CREATED);
 	}
 	@DeleteMapping("/deleteTeams/{game_id}")
 	public void deleteGameTeams(@PathVariable Long game_id) {

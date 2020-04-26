@@ -1,4 +1,6 @@
 package com.project.tb.dao;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +17,9 @@ public interface GameTeamsRepo extends CrudRepository <GameTeams , Long> {
 		void addGameTeam(@Param("guest")int guestId,@Param("host")int hostId,@Param("game_id") Long game_id);
 	    @Transactional
 		@Modifying
-		@Query(value="delete from game_teams where game_id=:game_id",nativeQuery = true)
+		@Query(value="delete  from game_teams where game_id=:game_id",nativeQuery = true)
 		void deleteGameTeams(@Param("game_id") Long game_id);
+	    @Override
+		@Query(value="select *  from game_teams where game_id=:game_id",nativeQuery = true)
+	    Optional<GameTeams> findById(@Param("game_id") Long game_id);
 }

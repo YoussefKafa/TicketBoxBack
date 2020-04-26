@@ -2,6 +2,7 @@ package com.project.tb.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,8 @@ public class GameTeamsServices {
 		ArrayList<GameTeams> gameTeams = new ArrayList<GameTeams>();
 		it.forEach(e -> gameTeams.add(e));
 		return gameTeams;
+	}
+	public Optional<GameTeams> findByGameId(Long game_id) {
+		return gameTeamsRepo.findById(game_id);
 	}
 }
