@@ -1,5 +1,6 @@
 package com.project.tb.models;
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,8 +11,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-@Entity
+//new class
 
+
+@Entity
 public class GameTeams implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
