@@ -34,6 +34,8 @@ public class GameTeamsController {
 	@Autowired
 	private GameTeamsRepo gameTeamsRepo;
 	@Autowired
+	private GameRepo gameRepo;
+	@Autowired
 	private MapValidationErrorService mapvalidationErrorService;
 	@PostMapping("/save")
 	public ResponseEntity<?> save(@Valid @RequestBody GameTeams gameTeams, BindingResult result){
@@ -43,8 +45,10 @@ public class GameTeamsController {
 	return new ResponseEntity<GameTeams>(gameTeams,HttpStatus.CREATED);
 	}
 	@PostMapping("/insertTeam/{guestId}/{hostId}/{game_id}")
-	public void insertTeam(@PathVariable int guestId,@PathVariable int hostId,@PathVariable Long game_id ){
+	public ResponseEntity<?>  insertTeam(@PathVariable int guestId,@PathVariable int hostId,@PathVariable Long game_id ){
 	     gameTeamsRepo.addGameTeam(guestId, hostId, game_id);
+	     Optional<Game> game2=gameRepo.findById(game_id);
+	     return new ResponseEntity<Game>(game2.get(),HttpStatus.CREATED);
 	}
 	@GetMapping("/findAll")
 	public List<GameTeams> allGameTeams() {
@@ -56,7 +60,9 @@ public class GameTeamsController {
 		return new ResponseEntity<GameTeams>(gameTeams.get(),HttpStatus.CREATED);
 	}
 	@DeleteMapping("/deleteTeams/{game_id}")
-	public void deleteGameTeams(@PathVariable Long game_id) {
+	public ResponseEntity<?> deleteGameTeams(@PathVariable Long game_id) {
 		 gameTeamsServices.deleteTeams(game_id);
+		 Optional<Game> game2=gameRepo.findById(game_id);
+	     return new ResponseEntity<Game>(game2.get(),HttpStatus.CREATED);
 	}
 }
