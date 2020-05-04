@@ -94,4 +94,5 @@ public class Game extends AuditModel implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 }

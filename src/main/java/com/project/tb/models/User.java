@@ -63,8 +63,9 @@ public class User extends AuditModel implements UserDetails{
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	public Date setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+		return updatedAt;
 	}
 
 	public TicketsList getTicketsList() {
