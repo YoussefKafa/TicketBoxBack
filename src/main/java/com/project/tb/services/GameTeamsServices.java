@@ -25,6 +25,9 @@ public class GameTeamsServices {
     public void deleteTeams( long game_id) {
     	gameTeamsRepo.deleteGameTeams(game_id);
     }
+    public void updateGameTeamsByGameId(int host, int guest, int gameId) {
+    	gameTeamsRepo.updateGameTeamsByGameId(host, guest, gameId);
+    }
     public List<GameTeams> findAll() {
 		Iterable<GameTeams> it = gameTeamsRepo.findAll();
 		ArrayList<GameTeams> gameTeams = new ArrayList<GameTeams>();

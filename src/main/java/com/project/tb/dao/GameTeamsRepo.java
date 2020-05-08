@@ -22,4 +22,8 @@ public interface GameTeamsRepo extends CrudRepository <GameTeams , Long> {
 	    @Override
 		@Query(value="select *  from game_teams where game_id=:game_id",nativeQuery = true)
 	    Optional<GameTeams> findById(@Param("game_id") Long game_id);
+	    @Transactional
+		@Modifying
+		@Query("UPDATE GameTeams set host = :hostId ,guest=:guestId where game_id=:game_id")
+		void updateGameTeamsByGameId(int hostId, int guestId, int game_id);
 }
