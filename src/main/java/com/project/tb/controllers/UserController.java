@@ -59,8 +59,8 @@ class UserController{
     }
     //tested
     @RequestMapping(value = "/save", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, 
-            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) throws Exception{
 userValidator.validate(user, result);
 ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
