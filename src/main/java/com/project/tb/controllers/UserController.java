@@ -58,7 +58,7 @@ class UserController{
     	return ResponseEntity.ok(new JWTLoginSucesResponse(true, jwt));
     }
     //tested
-    @RequestMapping(value = "/{email}/authenticate", method = RequestMethod.POST,
+    @RequestMapping(value = "/save", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
             produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
 public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) throws Exception{
