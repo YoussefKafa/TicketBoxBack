@@ -20,6 +20,9 @@ public class Ticket extends AuditModel {
 	private int price;
 	private String section;
 	private boolean returnable;
+	private int gate;
+	private Date releaseDate;
+	private Date endDate;
 	private Date returnDate;
 	// many to one with the TicketsList
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
@@ -32,6 +35,28 @@ public class Ticket extends AuditModel {
 	private Game game;
 	////////////////////////////////
 	///////////////////////////////
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public int getGate() {
+		return gate;
+	}
+
+	public void setGate(int gate) {
+		this.gate = gate;
+	}
 	public Game getGame() {
 		return game;
 	}

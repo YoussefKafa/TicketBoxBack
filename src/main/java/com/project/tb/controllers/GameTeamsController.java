@@ -1,10 +1,7 @@
 package com.project.tb.controllers;
-
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.project.tb.dao.GameRepo;
 import com.project.tb.dao.GameTeamsRepo;
 import com.project.tb.models.Game;
@@ -26,7 +22,6 @@ import com.project.tb.models.Team;
 import com.project.tb.services.GameServices;
 import com.project.tb.services.GameTeamsServices;
 import com.project.tb.services.MapValidationErrorService;
-
 @RestController
 @RequestMapping("/api/gameTeams")
 public class GameTeamsController {

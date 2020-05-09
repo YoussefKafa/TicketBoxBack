@@ -47,8 +47,25 @@ private List<Game> games = new ArrayList<Game>();
 private int capacity=0;
 @Column(nullable = true, updatable = true, unique = false)
 private Date opened=defaultDate;
+private int gatesCount;
+private int honourGate;
 ///////////////////////
 ///////////////////////
+public int getGatesCount() {
+	return gatesCount;
+}
+
+public void setGatesCount(int gatesCount) {
+	this.gatesCount = gatesCount;
+}
+
+public int getHonourGate() {
+	return honourGate;
+}
+
+public void setHonourGate(int honourGate) {
+	this.honourGate = honourGate;
+}
 public int getCapacity() {
 	return capacity;
 }
