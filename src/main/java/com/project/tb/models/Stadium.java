@@ -45,43 +45,21 @@ private String image="0";
 private List<Game> games = new ArrayList<Game>();
 @Column(nullable = true, updatable = true, unique = false)
 private int capacity=0;
-@Column(nullable = true, updatable = true, unique = false)
-private Date opened=defaultDate;
-private int gatesCount;
-private int honourGate;
+private int gates;
 ///////////////////////
 ///////////////////////
-public int getGatesCount() {
-	return gatesCount;
+public int getGates() {
+	return gates;
 }
-
-public void setGatesCount(int gatesCount) {
-	this.gatesCount = gatesCount;
-}
-
-public int getHonourGate() {
-	return honourGate;
-}
-
-public void setHonourGate(int honourGate) {
-	this.honourGate = honourGate;
+public void setGates(int gates) {
+	this.gates = gates;
 }
 public int getCapacity() {
 	return capacity;
 }
-
 public void setCapacity(int capacity) {
 	this.capacity = capacity;
 }
-
-public Date getOpened() {
-	return opened;
-}
-
-public void setOpened(Date opened) {
-	this.opened = opened;
-}
-
 public List<Game> getGames() {
 	return games;
 }
