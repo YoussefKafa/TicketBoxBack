@@ -2,12 +2,15 @@ package com.project.tb.models;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -15,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.apache.naming.java.javaURLContextFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -50,8 +54,17 @@ public class User extends AuditModel implements UserDetails{
     protected void OnUpdate() {
     	this.updatedAt=new Date();
     }
+    @ManyToMany(mappedBy = "users")
+    @JsonIgnore
+    private java.util.Set<Ticket> tickets = new HashSet<>();
+	////////////////////////////////////
     ////////////////////////////////////
-    ////////////////////////////////////
+    public java.util.Set<Ticket> getTickets() {
+		return tickets;
+	}
+	public void setTickets(java.util.Set<Ticket> tickets) {
+		this.tickets = tickets;
+	}
     public Date getCreatedAt() {
 		return createdAt;
 	}

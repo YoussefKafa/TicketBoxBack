@@ -1,16 +1,21 @@
 package com.project.tb.models;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+
 import javax.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.mapping.List;
+import org.hibernate.mapping.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //many to one with TicketsList
 
 @Entity
-public class Ticket extends AuditModel {
+public class Ticket extends AuditModel implements Serializable{
 	@Id
 	@GeneratedValue
 	@Column(name = "ticket_id",unique = true, nullable = false)
@@ -18,83 +23,96 @@ public class Ticket extends AuditModel {
 	@Column(updatable = false)
 	// we are going to use it to find an individual ticket in the TicketsList
 	private String ticketSequence;
+	private String[] gates;
+	private String qrCode;
 	private int price;
-	private String section;
+	private int counter;
 	private boolean returnable;
-	private int gate;
-	private Date releaseDate;
-	private Date endDate;
-	private Date returnDate;
+	private String releaseDate;
+	private String endDate;
+	private String returnDate;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "game_id", updatable = true, nullable = true)
 	private Game game;
+	@ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "User_tickets", 
+        joinColumns = { @JoinColumn(name = "ticket_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
+    java.util.Set<User> users =new HashSet<>();
 	////////////////////////////////
 	///////////////////////////////
-	public Date getReleaseDate() {
-		return releaseDate;
+	public java.util.Set<User> getUsers() {
+		return users;
 	}
-
-	public void setReleaseDate(Date releaseDate) {
-		this.releaseDate = releaseDate;
+	public void setUsers(java.util.Set<User> users) {
+		this.users = users;
 	}
-
-	public Date getEndDate() {
-		return endDate;
+	public String getQrCode() {
+		return qrCode;
 	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
 	}
-	public int getGate() {
-		return gate;
+	public String[] getGates() {
+		return gates;
 	}
-
-	public void setGate(int gate) {
-		this.gate = gate;
-	}
-	public Game getGame() {
-		return game;
-	}
-
-	public void setGame(Game game) {
-		this.game = game;
+	public void setGates(String[] gates) {
+		this.gates = gates;
 	}
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getTicketSequence() {
+		return ticketSequence;
+	}
+	public void setTicketSequence(String ticketSequence) {
+		this.ticketSequence = ticketSequence;
 	}
 	public int getPrice() {
 		return price;
 	}
-
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
-	public String getSection() {
-		return section;
+	public int getCounter() {
+		return counter;
 	}
-
-	public void setSection(String section) {
-		this.section = section;
+	public void setCounter(int counter) {
+		this.counter = counter;
 	}
-
 	public boolean isReturnable() {
 		return returnable;
 	}
-
 	public void setReturnable(boolean returnable) {
 		this.returnable = returnable;
 	}
-
-	public Date getReturnDate() {
+	public String getReleaseDate() {
+		return releaseDate;
+	}
+	public void setReleaseDate(String releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getReturnDate() {
 		return returnDate;
 	}
-
-	public void setReturnDate(Date returnDate) {
+	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
+	}
+	public Game getGame() {
+		return game;
+	}
+	public void setGame(Game game) {
+		this.game = game;
 	}
 }
