@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import com.project.tb.models.Ticket;
 import com.project.tb.services.TicketServices;
 import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 @RestController
@@ -40,5 +42,11 @@ public Long count() {
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
 	ticketService.deleteById(id);
+}
+@PostMapping("/addGame/{ticket_id}/{game_id}")
+public ResponseEntity<?> addGame(@PathVariable Long ticket_id,@PathVariable Long game_id) {
+	 ticketService.addGame(ticket_id,game_id);
+	 Optional<Ticket> ticket=ticketService.findById(ticket_id);
+	 return new ResponseEntity<Ticket>(ticket.get(),HttpStatus.CREATED);
 }
 }

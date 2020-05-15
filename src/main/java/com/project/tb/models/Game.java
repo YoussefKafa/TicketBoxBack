@@ -36,6 +36,7 @@ public class Game extends AuditModel implements Serializable {
 	//@JsonIgnore
 	private Stadium stadium;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "game")
+	@JsonIgnore
 	private List<Ticket> tickets = new ArrayList<>();
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "game")
 	private GameTeams gameTeams;

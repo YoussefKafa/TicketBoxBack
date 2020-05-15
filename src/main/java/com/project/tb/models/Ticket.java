@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Ticket extends AuditModel {
 	@Id
 	@GeneratedValue
+	@Column(name = "ticket_id",unique = true, nullable = false)
 	private Long id;
 	@Column(updatable = false)
 	// we are going to use it to find an individual ticket in the TicketsList
@@ -25,8 +26,7 @@ public class Ticket extends AuditModel {
 	private Date endDate;
 	private Date returnDate;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "game_id", updatable = false, nullable = false)
-	@JsonIgnore
+	@JoinColumn(name = "game_id", updatable = true, nullable = true)
 	private Game game;
 	////////////////////////////////
 	///////////////////////////////

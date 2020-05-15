@@ -1,6 +1,8 @@
 package com.project.tb.services;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.TicketRepo;
@@ -8,13 +10,13 @@ import com.project.tb.exceptions.TicketUniqueException;
 import com.project.tb.models.Ticket;
 @Service
 public class TicketServices {
-	    @Autowired
+	 @Autowired
 	    private TicketRepo ticketRepo;
 		public Ticket saveOrUpdate(final Ticket ticket) {
 	        try {
 	            return ticketRepo.save(ticket);
 	        } catch (final Exception e) {
-	            throw new TicketUniqueException("Ticket  "+ ticket.getId()+ " is already exists");
+	            throw new TicketUniqueException("Ticket  "+ ticket.getId()+ " is already exists"+e.getMessage());
 	        }
 	        
 	    }
@@ -42,5 +44,11 @@ public class TicketServices {
 		}
 		public void setTicketRepo(TicketRepo ticketRepo) {
 			this.ticketRepo = ticketRepo;
+		}
+		public void addGame(Long ticket_id,Long game_id) {
+			ticketRepo.addGame(ticket_id,game_id);
+		}
+		public Optional<Ticket> findById(Long id) {
+			return ticketRepo.findById(id);
 		}
 }
