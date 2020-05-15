@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
 import com.project.tb.exceptions.SomeThingWentWrong;
 import com.project.tb.exceptions.UserUniqueException;
-import com.project.tb.models.TicketsList;
 import com.project.tb.models.User;
 import com.sun.istack.FinalArrayList;
 
@@ -19,8 +18,6 @@ public class UserServices {
 	private UserRepo userRepo;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; // comes with spring security
-	@Autowired
-	private TicketsListRepo ticketsListRepo;
 
 	public User saveUser(User user) throws Exception {
 		try {
@@ -30,19 +27,6 @@ public class UserServices {
 			// for the one above also we can use @jsonIgnore in User class
 			// create a ticketslist every time you save or update a user
 			// if the user is new then create the list
-			if (user.getId() == null) {
-				TicketsList ticketsList = new TicketsList();
-				// set the relationship
-				user.setTicketsList(ticketsList);
-				ticketsList.setUser(user);
-				ticketsList.setUserIdentifier(user.getUserIdentifier());
-			}
-			// and this is what to do if
-			// we are updating a user
-			// so the ticketslist will not be null
-			if (user.getId() != null) {
-				user.setTicketsList(ticketsListRepo.findByUserIdentifier(user.getUserIdentifier()));
-			}
 			return userRepo.save(user);
 		} catch (Exception e) {
 			throw new UserUniqueException("User email:   " + user.getEmail().toLowerCase() + " is already exists");

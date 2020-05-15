@@ -39,8 +39,6 @@ public class User extends AuditModel implements UserDetails{
 	private String password;
 	@Transient // make sure it matches with password before persiste our user
 	private String confirmPassword;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-	private TicketsList ticketsList;
 	private Date createdAt;
 	private Date updatedAt;
     @PrePersist
@@ -67,15 +65,6 @@ public class User extends AuditModel implements UserDetails{
 		this.updatedAt = updatedAt;
 		return updatedAt;
 	}
-
-	public TicketsList getTicketsList() {
-		return ticketsList;
-	}
-
-	public void setTicketsList(TicketsList ticketsList) {
-		this.ticketsList = ticketsList;
-	}
-
 	public Long getUserId() {
 		return this.id;
 	}

@@ -24,11 +24,6 @@ public class Ticket extends AuditModel {
 	private Date releaseDate;
 	private Date endDate;
 	private Date returnDate;
-	// many to one with the TicketsList
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "ticketsList_id", updatable = false, nullable = false)
-	@JsonIgnore
-	private TicketsList tickets;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "game_id", updatable = false, nullable = false)
 	@JsonIgnore
@@ -64,14 +59,6 @@ public class Ticket extends AuditModel {
 	public void setGame(Game game) {
 		this.game = game;
 	}
-	public TicketsList getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(TicketsList tickets) {
-		this.tickets = tickets;
-	}
-
 	public Long getId() {
 		return id;
 	}
