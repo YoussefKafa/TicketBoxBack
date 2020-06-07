@@ -1,5 +1,6 @@
 package com.project.tb.services;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,29 @@ public class TicketServices {
 	    private TicketRepo ticketRepo;
 		public Ticket saveOrUpdate(final Ticket ticket) {
 	        try {
-	            return ticketRepo.save(ticket);
+	        if(ticket.getId()==null) {
+	            return ticketRepo.save(ticket);}
+	        else {
+	        
+	        	Optional<Ticket> ticket2=ticketRepo.findById(ticket.getId());
+	        	Ticket ticket22=ticket2.get();
+	        	System.out.println(ticket22.getCreatedAt());
+	        	Date createdAtDate=ticket22.getCreatedAt();
+	        	ticket.setCreatedAt(createdAtDate);
+	        	ticket22.setCreatedAt(createdAtDate);
+	        	Date updateDate=new Date();
+	        	ticket22.setUpdatedAt(ticket.setUpdatedAt((Date)updateDate));
+	        	ticket22.setCounter(ticket.getCounter());
+	        	ticket22.setEndDate(ticket.getEndDate());
+	        	ticket22.setGates(ticket.getGates());
+	        	ticket22.setPrice(ticket.getPrice());
+	        	ticket22.setReleaseDate(ticket.getReleaseDate());
+	        	ticket22.setReturnDate(ticket.getReturnDate());
+	        	ticket22.setReturnable(ticket.isReturnable());
+	        	ticket22.setTicketSequence(ticket.getTicketSequence());
+	        	ticket22.setQrCode(ticket.getQrCode());
+	        	return ticketRepo.save(ticket22);
+	        }
 	        } catch (final Exception e) {
 	            throw new TicketUniqueException("Ticket  "+ ticket.getId()+ " is already exists"+e.getMessage());
 	        }
