@@ -39,6 +39,10 @@ public List<Ticket> allTickets() {
 public Long count() {
     return ticketService.count();
 }
+@DeleteMapping("/deleteAll")
+public void deleteAll() {
+	ticketService.deleteAll();
+}
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
 	ticketService.deleteById(id);
