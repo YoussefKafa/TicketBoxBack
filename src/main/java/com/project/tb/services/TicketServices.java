@@ -53,7 +53,7 @@ public class TicketServices {
 	        return ticketRepo.count();
 	    }
 	    public void deleteById(Long ticketId) {
-	       ticketRepo.deleteById(ticketId);
+	       ticketRepo.deleteTicket(ticketId);
 	    }
 	    public void deleteAll() {
 	        ticketRepo.deleteAll();

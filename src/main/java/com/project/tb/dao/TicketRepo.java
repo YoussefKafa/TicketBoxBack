@@ -12,10 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.tb.models.*;
 
 @Repository
+
 public interface TicketRepo extends CrudRepository <Ticket , Long>{
 	Optional<Ticket> findById(Long id);
-	 @Transactional
+	@Transactional
 		@Modifying
 		@Query(value="UPDATE ticket SET game_id=:game_id where ticket_id=:ticket_id",nativeQuery = true)
 		void addGame(@Param("ticket_id") Long ticket_id,@Param("game_id") Long game_id);
+	@Transactional
+		@Modifying
+		@Query(value="DELETE from ticket where ticket_id=:ticketId",nativeQuery = true)
+	void deleteTicket(@Param("ticketId") Long ticketId);
 }
