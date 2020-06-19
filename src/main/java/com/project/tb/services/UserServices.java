@@ -67,4 +67,13 @@ public class UserServices {
 	public void deleteAll() {
 		userRepo.deleteAll();
 	}
+	public int countMaleUsers() {
+		return userRepo.countMaleUsers();
+	}
+	public int countFemaleUsers() {
+		return userRepo.countFemaleUsers();
+	}
+	public List<Object[]> countAgeGroupsOfUsers() {
+		return userRepo.countAgeGroupsOfUsers();
+	}
 }

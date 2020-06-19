@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
-
 import com.project.tb.exceptions.EmployeeUniqueException;
 import com.project.tb.models.Employee;
 import com.project.tb.models.User;
@@ -29,6 +28,9 @@ import com.project.tb.validator.UserValidator;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import static com.project.tb.security.SecurityConstants.TOKEN_PREFIX;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 @RestController
 @RequestMapping("/api/users")
@@ -75,6 +77,28 @@ public List<User> allUsers() {
 @GetMapping("/count")
 public Long count() {
     return userService.count();
+}
+@GetMapping("/statistics/countMaleUsers")
+public int countMaleUsers() {
+    return userService.countMaleUsers();
+}
+@GetMapping("/statistics/countFemaleUsers")
+public int countFemaleUsers() {
+    return userService.countFemaleUsers();
+}
+@GetMapping("/statistics/countAgeGroupsOfUsers")
+public List<Object[]> countAgeGroupsOfUsers() {
+ List<Object[]> results=  userService.countAgeGroupsOfUsers();
+		 results.stream().forEach((record) -> {
+		        int Aclass = ((BigDecimal) record[0]).intValue();
+		        int Bclass = ((BigDecimal) record[1]).intValue();
+		        int Cclass = ((BigDecimal) record[2]).intValue();
+		        int Dclass = ((BigDecimal) record[3]).intValue();
+		        int Eclass = ((BigDecimal) record[4]).intValue();
+		        int Fclass = ((BigDecimal) record[5]).intValue();
+		        int total = ((BigDecimal) record[6]).intValue();
+		});
+		 return results;
 }
 //tested
 @DeleteMapping("/deleteById/{userId}")
