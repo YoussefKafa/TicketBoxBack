@@ -40,6 +40,8 @@ public class User extends AuditModel implements UserDetails{
     private String userIdentifier;
 	private String name;
 	private String email;
+	private int age;
+	private boolean gender;
 	private String password;
 	@Transient // make sure it matches with password before persiste our user
 	private String confirmPassword;
@@ -107,6 +109,18 @@ public class User extends AuditModel implements UserDetails{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public boolean isGender() {
+		return gender;
+	}
+	public void setGender(boolean gender) {
+		this.gender = gender;
 	}
 	public String getUserIdentifier() {
 		return userIdentifier;

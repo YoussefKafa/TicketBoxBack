@@ -28,6 +28,7 @@ public class Team extends AuditModel implements Serializable{
 private Long id;
 private String name;
 private String city;
+private int popularity;
 private String country=defaultCountryString;
 @Lob
 @Column(name="image", nullable=false, columnDefinition="mediumblob") //medium is 16mb
@@ -75,5 +76,11 @@ public void setCountry(String country) {
     public void setImage(String image) {
         this.image = image;
     }
-    
+    public int getPopularity() {
+    	return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+    	this.popularity = popularity;
+    }
 }
