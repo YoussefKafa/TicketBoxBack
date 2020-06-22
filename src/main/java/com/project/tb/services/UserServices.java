@@ -23,7 +23,6 @@ public class UserServices {
 		try {
 			user.setUserIdentifier(user.getUserIdentifier());
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); // encode the password
-			user.setConfirmPassword(""); // to prevent it from appearing in json
 			// for the one above also we can use @jsonIgnore in User class
 			// create a ticketslist every time you save or update a user
 			// if the user is new then create the list

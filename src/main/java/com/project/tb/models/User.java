@@ -45,9 +45,6 @@ public class User extends AuditModel implements UserDetails{
 	private int age;
 	private boolean gender;
 	private String password;
-	@Transient // make sure it matches with password before persiste our user
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private String confirmPassword;
 	private Date createdAt;
 	private Date updatedAt;
     @PrePersist
@@ -139,13 +136,6 @@ public class User extends AuditModel implements UserDetails{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getConfirmPassword() {
-		return this.confirmPassword;
-	}
-	
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
 	}
 	@Override
 	@JsonIgnore
