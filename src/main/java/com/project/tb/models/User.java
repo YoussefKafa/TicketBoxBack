@@ -44,6 +44,7 @@ public class User extends AuditModel implements UserDetails{
 	private boolean gender;
 	private String password;
 	@Transient // make sure it matches with password before persiste our user
+	@JsonIgnore
 	private String confirmPassword;
 	private Date createdAt;
 	private Date updatedAt;
