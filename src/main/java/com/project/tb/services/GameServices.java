@@ -66,4 +66,7 @@ public class GameServices{
 		gameRepo.deleteTeam(gameId,teamId);
 		
 	}
+	public int salesCount() {
+		return gameRepo.salesCount();
+	}
 }

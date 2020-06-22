@@ -23,6 +23,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 //ManyToMany with Tickets
 //OneToOne with TicketsList
@@ -44,7 +46,7 @@ public class User extends AuditModel implements UserDetails{
 	private boolean gender;
 	private String password;
 	@Transient // make sure it matches with password before persiste our user
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String confirmPassword;
 	private Date createdAt;
 	private Date updatedAt;
@@ -138,11 +140,10 @@ public class User extends AuditModel implements UserDetails{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public String getConfirmPassword() {
 		return this.confirmPassword;
 	}
-
+	
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}

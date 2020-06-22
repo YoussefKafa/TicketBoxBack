@@ -40,6 +40,8 @@ public class Game extends AuditModel implements Serializable {
 	private List<Ticket> tickets = new ArrayList<>();
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "game")
 	private GameTeams gameTeams;
+	@JsonIgnore
+	private int saleCounter;
 	///////////////
 ///////////
 	public GameTeams getGameTeams() {
@@ -94,6 +96,14 @@ public class Game extends AuditModel implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public int getSaleCounter() {
+		return saleCounter;
+	}
+
+	public void setSaleCounter(int saleCounter) {
+		this.saleCounter = saleCounter;
 	}
 
 }

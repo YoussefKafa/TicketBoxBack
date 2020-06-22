@@ -30,4 +30,6 @@ public interface GameRepo extends CrudRepository <Game , Long>{
 		@Modifying
 		@Query(value="DELETE from game_teams where game_id=:gameId AND team_Id=:teamId",nativeQuery = true)
 	void deleteTeam(@Param("gameId") Long gameId,@Param("teamId") Long teamId);
+		@Query(value="select sum(sale_counter) from game",nativeQuery = true)
+	public int salesCount();
 }

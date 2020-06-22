@@ -77,4 +77,8 @@ public void deleteTeams(@PathVariable Long gameId) {
 public void deleteTeam(@PathVariable Long gameId,@PathVariable Long teamId) {
 	 gameService.deleteTeam(gameId,teamId);
 }
+@GetMapping("/salesCount")
+public int salesCount() {
+	return gameService.salesCount();
+}
 }
