@@ -2,6 +2,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/team")
 class TeamController{
@@ -33,7 +35,7 @@ public ResponseEntity<?> save(@Valid @RequestBody Team team, BindingResult resul
     Team team1=teamService.saveOrUpdate(team);
 return new ResponseEntity<Team>(team,HttpStatus.CREATED);
 }
-@GetMapping("/findAll")
+@GetMapping("/show/findAll")
 public List<Team> allTeams() {
 	return teamService.findAll();
 }
@@ -45,7 +47,7 @@ public Long count() {
 public void deleteById(@PathVariable Long id) {
 	teamService.deleteById(id);
 }
-@GetMapping("/findById/{id}")
+@GetMapping("/show/findById/{id}")
 public Optional<Team> findByName(@PathVariable Long id) {
     return teamService.findById(id);
 }

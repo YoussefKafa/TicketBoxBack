@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.project.tb.models.Team;
 import com.project.tb.services.GameServices;
 import com.project.tb.services.GameTeamsServices;
 import com.project.tb.services.MapValidationErrorService;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/gameTeams")
 public class GameTeamsController {
@@ -53,11 +55,11 @@ public class GameTeamsController {
 	     Optional<Game> game2=gameRepo.findById((long)game_id);
 	     return new ResponseEntity<Game>(game2.get(),HttpStatus.CREATED);
 	}
-	@GetMapping("/findAll")
+	@GetMapping("/show/findAll")
 	public List<GameTeams> allGameTeams() {
 		return gameTeamsServices.findAll();
 	}
-	@GetMapping("/findByGameId/{game_id}")
+	@GetMapping("/show/findByGameId/{game_id}")
 	public ResponseEntity<?>  findByGameId(@PathVariable Long game_id) {
 	 Optional<GameTeams> gameTeams= gameTeamsServices.findByGameId(game_id);
 		return new ResponseEntity<GameTeams>(gameTeams.get(),HttpStatus.CREATED);

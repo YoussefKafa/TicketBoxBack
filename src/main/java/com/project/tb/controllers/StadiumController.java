@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import com.project.tb.services.StadiumServices;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/stadium")
 class StadiumController{
@@ -33,7 +35,7 @@ public ResponseEntity<?> addStadium(@Valid @RequestBody Stadium stadium, Binding
 return new ResponseEntity<Stadium>(stadium,HttpStatus.CREATED);
 }
 
-@GetMapping("/findAll")
+@GetMapping("/show/findAll")
 public List<Stadium> allStadiums() {
 	return stadiumService.findAll();
 }
@@ -59,7 +61,7 @@ public String getIdByName(@PathVariable String name) {
 public Optional<Stadium> findByName(@PathVariable String name) {
     return stadiumService.findByName(name);
 }
-@GetMapping("/findById/{id}")
+@GetMapping("/show/findById/{id}")
 public Optional<Stadium> findByName(@PathVariable Long id) {
     return stadiumService.findById(id);
 }

@@ -11,6 +11,7 @@ import com.project.tb.dao.UserRepo;
 import com.project.tb.models.User;
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
+	//injection of userRepo to automatically generate instance of userRepo 
 	@Autowired
 	private UserRepo userRepo;
 	@Override

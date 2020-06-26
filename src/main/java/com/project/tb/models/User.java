@@ -30,56 +30,64 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 //OneToOne with TicketsList
 @Entity
 //user details take care of user security and password	// things
-@Table(
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "email")
-        }
-)
-public class User extends AuditModel implements UserDetails{ 
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
+public class User extends AuditModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-    private String userIdentifier;
+	private String userIdentifier;
 	private String name;
 	private String email;
 	private int age;
 	private boolean gender;
 	private String password;
+	private String role;
+	private boolean enabled;
 	private Date createdAt;
 	private Date updatedAt;
-    @PrePersist
-    protected void onCreate() {
-    	this.createdAt=new Date();
-    	this.updatedAt=new Date();
-    }
-    @PreUpdate
-    protected void OnUpdate() {
-    	this.updatedAt=new Date();
-    }
-    @ManyToMany(mappedBy = "users")
-    @JsonIgnore
-    private java.util.Set<Ticket> tickets = new HashSet<>();
+
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Date();
+		this.updatedAt = new Date();
+	}
+
+	@PreUpdate
+	protected void OnUpdate() {
+		this.updatedAt = new Date();
+	}
+
+	@ManyToMany(mappedBy = "users")
+	@JsonIgnore
+	private java.util.Set<Ticket> tickets = new HashSet<>();
+
 	////////////////////////////////////
-    ////////////////////////////////////
-    public java.util.Set<Ticket> getTickets() {
+	////////////////////////////////////
+	public java.util.Set<Ticket> getTickets() {
 		return tickets;
 	}
+
 	public void setTickets(java.util.Set<Ticket> tickets) {
 		this.tickets = tickets;
 	}
-    public Date getCreatedAt() {
+
+	public Date getCreatedAt() {
 		return createdAt;
 	}
+
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
+
 	public Date setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 		return updatedAt;
 	}
+
 	public Long getUserId() {
 		return this.id;
 	}
@@ -103,6 +111,7 @@ public class User extends AuditModel implements UserDetails{
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return this.email;
 	}
@@ -110,18 +119,23 @@ public class User extends AuditModel implements UserDetails{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public int getAge() {
 		return age;
 	}
+
 	public void setAge(int age) {
 		this.age = age;
 	}
+
 	public boolean isGender() {
 		return gender;
 	}
+
 	public void setGender(boolean gender) {
 		this.gender = gender;
 	}
+
 	public String getUserIdentifier() {
 		return userIdentifier;
 	}
@@ -137,40 +151,16 @@ public class User extends AuditModel implements UserDetails{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Override
-	@JsonIgnore
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+
+	public String getRole() {
+		return role;
 	}
-	@Override
-	@JsonIgnore
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
+
+	public void setRole(String role) {
+		this.role = role;
 	}
-	@Override
-	@JsonIgnore
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	@JsonIgnore
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	@JsonIgnore
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	@JsonIgnore
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

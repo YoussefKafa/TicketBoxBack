@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import com.project.tb.services.GameServices;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/game")
 class GameController{
@@ -43,7 +45,7 @@ public void updateGame(@Valid @RequestBody Game game, BindingResult result){
 	System.out.println(game.toString()+" ++++++++++++++++++++++++++++++++++++++++++++++==");
     Game game2=gameService.saveOrUpdate(game);
 }
-@GetMapping("/findAll")
+@GetMapping("/show/findAll")
 public List<Game> allGames() {
 	return gameService.findAll();
 }
@@ -55,7 +57,7 @@ public Long count() {
 public void deleteById(@PathVariable Long id) {
 	gameService.deleteById(id);
 }
-@GetMapping("/findById/{id}")
+@GetMapping("/show/findById/{id}")
 public Optional<Game> findByName(@PathVariable Long id) {
     return gameService.findById(id);
 }

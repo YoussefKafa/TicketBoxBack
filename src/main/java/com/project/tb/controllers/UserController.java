@@ -32,9 +32,9 @@ import static com.project.tb.security.SecurityConstants.TOKEN_PREFIX;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin
 class UserController{
     @Autowired
     private MapValidationErrorService mapvalidationErrorService;
@@ -69,24 +69,24 @@ User user1=userService.saveUser(user);
 return new ResponseEntity<User>(user,HttpStatus.CREATED);
 }
 //tested
-@GetMapping("/findAll")
+@GetMapping("/show/admin/findAll")
 public List<User> allUsers() {
 	return userService.findAll();
 }
 //tested
-@GetMapping("/count")
+@GetMapping("/admin/count")
 public Long count() {
     return userService.count();
 }
-@GetMapping("/statistics/countMaleUsers")
+@GetMapping("/admin/statistics/countMaleUsers")
 public int countMaleUsers() {
     return userService.countMaleUsers();
 }
-@GetMapping("/statistics/countFemaleUsers")
+@GetMapping("/admin/statistics/countFemaleUsers")
 public int countFemaleUsers() {
     return userService.countFemaleUsers();
 }
-@GetMapping("/statistics/countAgeGroupsOfUsers")
+@GetMapping("/admin/statistics/countAgeGroupsOfUsers")
 public List<Object[]> countAgeGroupsOfUsers() {
  List<Object[]> results=  userService.countAgeGroupsOfUsers();
 		 results.stream().forEach((record) -> {
@@ -101,7 +101,7 @@ public List<Object[]> countAgeGroupsOfUsers() {
 		 return results;
 }
 //tested
-@DeleteMapping("/deleteById/{userId}")
+@DeleteMapping("/admin/deleteById/{userId}")
 public ResponseEntity<?> deleteEmployeeById(@PathVariable String userId){
 	User user=userService.findById(Long.parseLong(userId));
 	if (user ==null) {
@@ -110,7 +110,7 @@ public ResponseEntity<?> deleteEmployeeById(@PathVariable String userId){
   userService.deleteById(Long.parseLong(userId));
   return new ResponseEntity<String>("User with id " + userId+ " was deleted", HttpStatus.OK);
 }
-@DeleteMapping("/deleteAll")
+@DeleteMapping("/admin/deleteAll")
 public ResponseEntity<?> deleteAll(){
 	userService.deleteAll();
   return new ResponseEntity<String>("All Users were deleted", HttpStatus.OK);

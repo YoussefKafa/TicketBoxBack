@@ -2,6 +2,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/ticket")
 class TicketController{
@@ -31,7 +33,7 @@ public ResponseEntity<?> save(@Valid @RequestBody Ticket ticket, BindingResult r
     Ticket ticket1=ticketService.saveOrUpdate(ticket);
 return new ResponseEntity<Ticket>(ticket,HttpStatus.CREATED);
 }
-@GetMapping("/findAll")
+@GetMapping("/show/findAll")
 public List<Ticket> allTickets() {
 	return ticketService.findAll();
 }

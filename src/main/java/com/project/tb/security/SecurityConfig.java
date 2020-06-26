@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.project.tb.services.CustomUserDetailsService;
 import static com.project.tb.security.SecurityConstants.*;
 @Configuration
@@ -20,10 +18,8 @@ import static com.project.tb.security.SecurityConstants.*;
 @EnableGlobalMethodSecurity(
     securedEnabled = true, // make sure that whenever we want to add very specific security , for the future
     jsr250Enabled = true,
-    prePostEnabled = true
-)
+    prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	
 	@Autowired
 	private JwtAuthenticationEntryPoint unathorizedHandler;
 	@Autowired
@@ -32,7 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Bean
 	public JwtAuthenticationFilter authinticationFilter() { return new JwtAuthenticationFilter();}
-	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
@@ -43,34 +38,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		return super.authenticationManager();
 	}
     @Override
-    public void configure(HttpSecurity http) throws Exception {
+     public void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()
     .exceptionHandling().authenticationEntryPoint(unathorizedHandler)
     .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     .and()
-    //don't authorize the following requests
-    .authorizeRequests()
-    .antMatchers(
-        "/",
-        "/favicon.ico",
-        "/**/*.png",
-        "/**/*.gif",
-        "/**/*.svg",
-        "/**/*.jpg",
-        "/**/*.html",
-        "/**/*.css",
-        "/**/*.js"
-    ).permitAll()
-    .antMatchers(USER_STATISTICS).permitAll()
-    .antMatchers(ALL_OF_USERS).permitAll()
-    .antMatchers(SIGN_UP_URL).permitAll()
-    .antMatchers(STADIUM_URL).permitAll()
-    .antMatchers(TEAM_URL).permitAll()
-    .antMatchers(LOGIN_URL).permitAll()
-    .antMatchers(TICKET_URL).permitAll()
-    .antMatchers(GAME_URL).permitAll()
-    .antMatchers(EMPLOYEE_URL).permitAll()
-    .antMatchers(GAMETEAMS_URL).permitAll()
-    .anyRequest().authenticated();
+   .authorizeRequests().antMatchers("/api/stadium/show/**").permitAll()
+		   .antMatchers("/api/game/show/**").permitAll()
+		   .antMatchers("/api/gameTeams/show/**").permitAll()
+		   .antMatchers("/api/team/show/**").permitAll()
+		   .antMatchers("/api/ticket/show/**").permitAll()
+		   .antMatchers("/api/users/show/**").permitAll()
+   .antMatchers(TEAM_URL).permitAll()
+   .antMatchers(GAME_URL).permitAll()
+    .anyRequest().authenticated().and()
+    .formLogin().loginPage(LOGIN_FORM).permitAll()
+    ;
     }
 }
