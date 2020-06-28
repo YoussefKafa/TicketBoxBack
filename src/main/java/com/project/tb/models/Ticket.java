@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //many to one with TicketsList
 
 @Entity
-public class Ticket extends AuditModel implements Serializable{
+public class Ticket extends DateAudit implements Serializable{
 	@Id
 	@GeneratedValue
 	@Column(name = "ticket_id",unique = true, nullable = false)

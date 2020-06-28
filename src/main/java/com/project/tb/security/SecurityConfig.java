@@ -11,23 +11,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.project.tb.services.CustomUserDetailsService;
-import static com.project.tb.security.SecurityConstants.*;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
     securedEnabled = true, // make sure that whenever we want to add very specific security , for the future
     jsr250Enabled = true,
     prePostEnabled = true)
+//**checked**//
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
-	private JwtAuthenticationEntryPoint unathorizedHandler;
+	private JwtAuthenticationEntryPoint unauthorizedHandler;
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Bean
-	public JwtAuthenticationFilter authinticationFilter() { return new JwtAuthenticationFilter();}
+	public JwtAuthenticationFilter jwtauthinticationFilter() { return new JwtAuthenticationFilter();}
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
@@ -39,18 +40,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
     @Override
      public void configure(HttpSecurity http) throws Exception {
-    http.cors().and().csrf().disable()
-    .exceptionHandling().authenticationEntryPoint(unathorizedHandler)
-    .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-    .and()
-   .authorizeRequests().antMatchers("/api/stadium/show/**").permitAll()
-		   .antMatchers("/api/game/show/**").permitAll()
-		   .antMatchers("/api/gameTeams/show/**").permitAll()
-		   .antMatchers("/api/team/show/**").permitAll()
-		   .antMatchers("/api/ticket/show/**").permitAll()
-		   .antMatchers("/api/users/show/**").permitAll()
-    .anyRequest().authenticated().and()
-    .formLogin().loginPage(LOGIN_FORM).permitAll()
-    ;
+    	http
+        .cors()
+            .and()
+        .csrf()
+            .disable()
+        .exceptionHandling()
+            .authenticationEntryPoint(unauthorizedHandler)
+            .and()
+        .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+        .authorizeRequests()
+            .antMatchers("/",
+                "/favicon.ico",
+                "/**/*.png",
+                "/**/*.gif",
+                "/**/*.svg",
+                "/**/*.jpg",
+                "/**/*.html",
+                "/**/*.css",
+                "/**/*.js")
+                .permitAll()
+                .antMatchers("/api/auth/**", "/api/user/checkEmailAvailability").permitAll()
+            .anyRequest()
+                .authenticated();
+
+// Add our custom JWT security filter
+http.addFilterBefore(jwtauthinticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

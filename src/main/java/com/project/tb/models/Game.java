@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="game", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "gameIdentifier")
 })
-public class Game extends AuditModel implements Serializable {
+public class Game extends DateAudit implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "game_id",unique = true, nullable = false)

@@ -27,4 +27,5 @@ public interface UserRepo extends CrudRepository <User , Long>{
 			"       sum(1) as total\r\n" + 
 			"from user;",nativeQuery = true)
 	public List<Object[]> countAgeGroupsOfUsers();
+	 Boolean existsByEmail(String email);
 }

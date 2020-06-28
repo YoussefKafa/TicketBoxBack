@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
         }
 )
 public
-class Stadium extends AuditModel{
+class Stadium extends DateAudit{
     @Id
     @GeneratedValue
     @Basic(fetch = FetchType.LAZY)

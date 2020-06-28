@@ -22,11 +22,7 @@ public class TicketServices {
 	        	Optional<Ticket> ticket2=ticketRepo.findById(ticket.getId());
 	        	Ticket ticket22=ticket2.get();
 	        	System.out.println(ticket22.getCreatedAt());
-	        	Date createdAtDate=ticket22.getCreatedAt();
-	        	ticket.setCreatedAt(createdAtDate);
-	        	ticket22.setCreatedAt(createdAtDate);
 	        	Date updateDate=new Date();
-	        	ticket22.setUpdatedAt(ticket.setUpdatedAt((Date)updateDate));
 	        	ticket22.setCounter(ticket.getCounter());
 	        	ticket22.setEndDate(ticket.getEndDate());
 	        	ticket22.setGates(ticket.getGates());

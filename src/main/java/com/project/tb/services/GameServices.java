@@ -24,9 +24,7 @@ public class GameServices{
 				Game game2=game1.get();
 			game.setStadium(game2.getStadium());
 			game.setGameIdentifier(game2.getGameIdentifier());
-			game.setCreatedAt(game2.getCreatedAt());
 			Date updateDate=new Date();
-			game.setUpdatedAt(game2.setUpdatedAt((Date)updateDate));
 			return gameRepo.save(game);
 			}
         } catch (final Exception e) {

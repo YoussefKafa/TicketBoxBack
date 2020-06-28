@@ -10,7 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "Employee")
-public class Employee extends AuditModel{
+public class Employee extends DateAudit{
     @Id
     @GeneratedValue
     private  Long id;

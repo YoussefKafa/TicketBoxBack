@@ -19,7 +19,7 @@ import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
-public class Team extends AuditModel implements Serializable{
+public class Team extends DateAudit implements Serializable{
 	@Transient
 	private String defaultCountryString  = "Unknown";
 @Id
