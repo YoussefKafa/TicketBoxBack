@@ -15,6 +15,8 @@ public class UserPrincipal implements UserDetails{
     private String email;
     @JsonIgnore
     private String password;
+    @JsonIgnore
+    private boolean isEnabled;
     private Collection<? extends GrantedAuthority> authorities;
     public UserPrincipal(Long id, String name, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
@@ -69,7 +71,7 @@ public class UserPrincipal implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return this.isEnabled();
+		return true;
 	}
 	  @Override
 	    public int hashCode() {
