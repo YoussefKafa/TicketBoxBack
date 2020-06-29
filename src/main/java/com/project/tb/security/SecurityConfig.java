@@ -60,9 +60,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/**/*.jpg",
                 "/**/*.html",
                 "/**/*.css",
-                "/**/*.js")
+                "/**/*.js",
+                "/api/team/show/findAll",
+                "/api/stadium/show/findAll",
+                "/api/ticket/show/findAll",
+                "/api/game/show/findAll",
+                "/api/auth/**",
+                "/api/user/checkEmailAvailability")
                 .permitAll()
-                .antMatchers("/api/auth/**", "/api/user/checkEmailAvailability").permitAll()
             .anyRequest()
                 .authenticated();
 
