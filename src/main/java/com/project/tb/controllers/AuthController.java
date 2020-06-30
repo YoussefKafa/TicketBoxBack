@@ -89,8 +89,8 @@ public class AuthController {
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
-    @GetMapping("/getIdFromToken/{token}")
-    public Long getIdFromToken(@PathVariable(value = "token") String token) {
-return tokenProvider.getUserIdFromJWT(token);
+    @GetMapping("/getIdFromToken")
+    public Long getIdFromToken(@Valid @RequestBody GetIdFromTokenRequest getIdFromTokenRequest) {
+return tokenProvider.getUserIdFromJWT(getIdFromTokenRequest.getToken());
     }
 }
