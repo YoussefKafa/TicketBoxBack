@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
 import com.project.tb.exceptions.SomeThingWentWrong;
-import com.project.tb.exceptions.UserUniqueException;
+import com.project.tb.exceptions.UserException;
 import com.project.tb.models.TicketsList;
 import com.project.tb.models.User;
 import com.sun.istack.FinalArrayList;

@@ -82,7 +82,11 @@ class UserController {
 		User user1 = userService.saveUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
-
+	@PreAuthorize("hasRole('USER')")
+	@GetMapping("/show/findById/{userId}")
+	public User findById(@PathVariable Long userId) {
+		return userService.findById(userId);
+	}
 //tested
 	@GetMapping("/show/admin/findAll")
 	public List<User> allUsers() {

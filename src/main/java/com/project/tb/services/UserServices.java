@@ -2,13 +2,14 @@ package com.project.tb.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
 import com.project.tb.exceptions.SomeThingWentWrong;
-import com.project.tb.exceptions.UserUniqueException;
+import com.project.tb.exceptions.UserException;
 import com.project.tb.models.User;
 import com.sun.istack.FinalArrayList;
 
@@ -27,10 +28,9 @@ public class UserServices {
 			// if the user is new then create the list
 			return userRepo.save(user);
 		} catch (Exception e) {
-			throw new UserUniqueException("User email:   " + user.getEmail().toLowerCase() + " is already exists");
+			throw new UserException("User email:   " + user.getEmail().toLowerCase() + " is already exists");
 		}
 	}
-
 //tested
 	public List<User> findAll() {
 		Iterable<User> it = userRepo.findAll();
@@ -47,9 +47,14 @@ public class UserServices {
 	// tested
 	public User findById(Long userId) {
 		Optional<User> user = userRepo.findById(userId);
-		User user2 = user.get();
+		User user2;
+		try {
+		user2 = user.get();}
+		catch (NoSuchElementException e) {
+			throw new UserException("User with id: " + userId + " does not exist.");
+		}
 		if (user2 == null)
-			throw new UserUniqueException("User with id : " + userId + " does not exist");
+			throw new UserException("User with id : " + userId + " does not exist");
 		return user2;
 	}
 
@@ -58,7 +63,7 @@ public class UserServices {
 		Optional<User> user = userRepo.findById(userId);
 		User user2 = user.get();
 		if (user == null)
-			throw new UserUniqueException("User with id " + userId + " cannot be found");
+			throw new UserException("User with id " + userId + " cannot be found");
 		userRepo.delete(user2);
 	}
 

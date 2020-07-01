@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler{
     @ExceptionHandler
-    public final ResponseEntity<Object> handleUserUniqueException(UserUniqueException ex, WebRequest req){
+    public final ResponseEntity<Object> handleUserUniqueException(UserException ex, WebRequest req){
         UserUniqueExceptionResponse userUniqueExceptionResponse=new UserUniqueExceptionResponse(ex.getMessage());
         return new ResponseEntity(userUniqueExceptionResponse,HttpStatus.BAD_REQUEST);
     }
