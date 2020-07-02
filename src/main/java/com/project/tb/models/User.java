@@ -43,11 +43,10 @@ public class User extends DateAudit {
 	        this.age=age;
 	        this.gender=gender;
 	    }
-	
-
 	@ManyToMany(mappedBy = "users")
 	@JsonIgnore
 	private java.util.Set<Ticket> tickets = new HashSet<>();
+	private int credit=0;
 	///////////////////////////////////////////
 	///////////////////////////////////////////
 	public Long getId() {
@@ -103,6 +102,12 @@ public class User extends DateAudit {
 	}
 	public void setTickets(java.util.Set<Ticket> tickets) {
 		this.tickets = tickets;
+	}
+	public int getCredit() {
+		return credit;
+	}
+	public void setCredit(int cash) {
+		this.credit = cash;
 	}
 
 	////////////////////////////////////

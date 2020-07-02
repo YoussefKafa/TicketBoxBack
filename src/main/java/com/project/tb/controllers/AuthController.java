@@ -89,7 +89,7 @@ public class AuthController {
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
-    @GetMapping("/getIdFromToken")
+    @PostMapping("/getIdFromToken")
     public Long getIdFromToken(@Valid @RequestBody GetIdFromTokenRequest getIdFromTokenRequest) {
 return tokenProvider.getUserIdFromJWT(getIdFromTokenRequest.getToken());
     }

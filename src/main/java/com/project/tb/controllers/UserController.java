@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -103,7 +104,11 @@ class UserController {
 	public int countMaleUsers() {
 		return userService.countMaleUsers();
 	}
-
+	@PreAuthorize("hasRole('USER')")
+	@PostMapping("/admin/addCredit/{userId}/{credit}")
+	public void addCredit(@PathVariable long userId,@PathVariable int credit) {
+		userService.addCredit(credit, userId);
+	}
 	@GetMapping("/admin/statistics/countFemaleUsers")
 	public int countFemaleUsers() {
 		return userService.countFemaleUsers();

@@ -66,7 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/api/ticket/show/findAll",
                 "/api/game/show/findAll",
                 "/api/auth/**",
-                "/api/user/checkEmailAvailability")
+                "/api/user/checkEmailAvailability",
+                "/api/auth/getIdFromToken")
                 .permitAll()
             .anyRequest()
                 .authenticated();

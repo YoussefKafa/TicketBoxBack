@@ -2,6 +2,10 @@ package com.project.tb.dao;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -35,6 +39,9 @@ public interface UserRepo extends CrudRepository<User, Long> {
 			+ "       sum(case when age>=70 then 1 else 0 end) as Fclass,\r\n" + "       sum(1) as total\r\n"
 			+ "from user;", nativeQuery = true)
 	public List<Object[]> countAgeGroupsOfUsers();
-
 	Boolean existsByEmail(String email);
+	@Transactional
+	@Modifying
+	@Query("UPDATE User s  set s.credit = s.credit+:credit where s.id = :id")
+	void addCredit(int credit,Long id);
 }

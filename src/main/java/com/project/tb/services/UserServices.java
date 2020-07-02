@@ -66,7 +66,9 @@ public class UserServices {
 			throw new UserException("User with id " + userId + " cannot be found");
 		userRepo.delete(user2);
 	}
-
+public void addCredit(int credit, long id) {
+	userRepo.addCredit(credit, id);
+}
 	public void deleteAll() {
 		userRepo.deleteAll();
 	}
