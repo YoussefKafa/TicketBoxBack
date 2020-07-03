@@ -104,7 +104,7 @@ class UserController {
 	public int countMaleUsers() {
 		return userService.countMaleUsers();
 	}
-	@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/admin/addCredit/{userId}/{credit}")
 	public void addCredit(@PathVariable long userId,@PathVariable int credit) {
 		userService.addCredit(credit, userId);
