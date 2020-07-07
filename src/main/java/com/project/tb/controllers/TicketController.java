@@ -2,6 +2,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ class TicketController{
 private TicketServices ticketService;
 @Autowired
 private MapValidationErrorService mapvalidationErrorService;
+@PreAuthorize("hasRole('ADMIN')")
 @PostMapping("/save")
 public ResponseEntity<?> save(@Valid @RequestBody Ticket ticket, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
@@ -37,18 +39,22 @@ return new ResponseEntity<Ticket>(ticket,HttpStatus.CREATED);
 public List<Ticket> allTickets() {
 	return ticketService.findAll();
 }
+@PreAuthorize("hasRole('ADMIN')")
 @GetMapping("/count")
 public Long count() {
     return ticketService.count();
 }
+@PreAuthorize("hasRole('ADMIN')")
 @DeleteMapping("/deleteAll")
 public void deleteAll() {
 	ticketService.deleteAll();
 }
+@PreAuthorize("hasRole('ADMIN')")
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
 	ticketService.deleteById(id);
 }
+@PreAuthorize("hasRole('ADMIN')")
 @PostMapping("/addGame/{ticket_id}/{game_id}")
 public ResponseEntity<?> addGame(@PathVariable Long ticket_id,@PathVariable Long game_id) {
 	 ticketService.addGame(ticket_id,game_id);

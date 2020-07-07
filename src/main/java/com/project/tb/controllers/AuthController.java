@@ -90,7 +90,7 @@ public class AuthController {
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER','ADMIN')")
     @PostMapping("/getIdFromToken")
     public Long getIdFromToken(@Valid @RequestBody GetIdFromTokenRequest getIdFromTokenRequest) {
 return tokenProvider.getUserIdFromJWT(getIdFromTokenRequest.getToken());

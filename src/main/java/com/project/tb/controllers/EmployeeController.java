@@ -2,6 +2,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +26,7 @@ private MapValidationErrorService mapvalidationErrorService;
 @Autowired
 private EmployeeServices employeeService;
 //tested
+@PreAuthorize("hasRole('ADMIN')")
 @PostMapping("/save")
 public ResponseEntity<?> addEmployee(@Valid @RequestBody Employee employee, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
@@ -33,22 +35,26 @@ public ResponseEntity<?> addEmployee(@Valid @RequestBody Employee employee, Bind
 return new ResponseEntity<Employee>(employee,HttpStatus.CREATED);
 }
 //tested
+@PreAuthorize("hasRole('ADMIN')")
 @GetMapping("/getById/{id}")
 public ResponseEntity<?> getEmployeeById(@PathVariable String id){
     Employee employee = employeeService.findById(Long.parseLong(id));
 return new ResponseEntity<Employee>(employee,HttpStatus.OK);
 }
 //tested
+@PreAuthorize("hasRole('ADMIN')")
 @GetMapping("/findAll")
 public List<Employee> allEmployees() {
 	return employeeService.findAll();
 }
 //tested
+@PreAuthorize("hasRole('ADMIN')")
 @GetMapping("/count")
 public Long count() {
     return employeeService.count();
 }
 //tested
+@PreAuthorize("hasRole('ADMIN')")
 @DeleteMapping("/deleteById/{empId}")
 public ResponseEntity<?> deleteEmployeeById(@PathVariable String empId){
 	Employee employee=employeeService.findById(Long.parseLong(empId));
@@ -59,6 +65,7 @@ public ResponseEntity<?> deleteEmployeeById(@PathVariable String empId){
   return new ResponseEntity<String>("Employee with id " + empId + " was deleted", HttpStatus.OK);
 }
 //tested
+@PreAuthorize("hasRole('ADMIN')")
 @DeleteMapping("/deleteAll")
 public ResponseEntity<?> deleteAll(){
 	employeeService.deleteAll();

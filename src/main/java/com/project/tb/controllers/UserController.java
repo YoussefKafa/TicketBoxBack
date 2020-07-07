@@ -48,7 +48,7 @@ class UserController {
 	private UserRepo userRepository;
 
 	@GetMapping("/user/me")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER','ADMIN')")
 	public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
 		UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(),
 				currentUser.getName());
@@ -83,7 +83,7 @@ class UserController {
 		User user1 = userService.saveUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER','ADMIN')")
 	@GetMapping("/show/findById/{userId}")
 	public User findById(@PathVariable Long userId) {
 		return userService.findById(userId);
@@ -95,11 +95,12 @@ class UserController {
 	}
 
 //tested
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/admin/count")
 	public Long count() {
 		return userService.count();
 	}
-
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/admin/statistics/countMaleUsers")
 	public int countMaleUsers() {
 		return userService.countMaleUsers();
@@ -109,11 +110,12 @@ class UserController {
 	public void addCredit(@PathVariable long userId,@PathVariable int credit) {
 		userService.addCredit(credit, userId);
 	}
+    @PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/admin/statistics/countFemaleUsers")
 	public int countFemaleUsers() {
 		return userService.countFemaleUsers();
 	}
-
+    @PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/admin/statistics/countAgeGroupsOfUsers")
 	public List<Object[]> countAgeGroupsOfUsers() {
 		List<Object[]> results = userService.countAgeGroupsOfUsers();
@@ -130,6 +132,7 @@ class UserController {
 	}
 
 //tested
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/admin/deleteById/{userId}")
 	public ResponseEntity<?> deleteEmployeeById(@PathVariable String userId) {
 		User user = userService.findById(Long.parseLong(userId));
@@ -139,7 +142,7 @@ class UserController {
 		userService.deleteById(Long.parseLong(userId));
 		return new ResponseEntity<String>("User with id " + userId + " was deleted", HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/admin/deleteAll")
 	public ResponseEntity<?> deleteAll() {
 		userService.deleteAll();

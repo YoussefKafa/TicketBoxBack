@@ -2,6 +2,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ class TeamController{
 private TeamServices teamService;
 @Autowired
 private MapValidationErrorService mapvalidationErrorService;
+@PreAuthorize("hasRole('ADMIN')")
 @PostMapping("/save")
 public ResponseEntity<?> save(@Valid @RequestBody Team team, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
@@ -39,10 +41,12 @@ return new ResponseEntity<Team>(team,HttpStatus.CREATED);
 public List<Team> allTeams() {
 	return teamService.findAll();
 }
+@PreAuthorize("hasRole('ADMIN')")
 @GetMapping("/count")
 public Long count() {
     return teamService.count();
 }
+@PreAuthorize("hasRole('ADMIN')")
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
 	teamService.deleteById(id);
