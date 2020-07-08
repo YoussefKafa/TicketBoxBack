@@ -11,12 +11,14 @@ import com.project.tb.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +30,7 @@ import com.project.tb.security.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -90,7 +92,7 @@ public class AuthController {
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
-    @PreAuthorize("hasRole('USER','ADMIN')")
+    @Secured({"ROLE_ADMIN"})
     @PostMapping("/getIdFromToken")
     public Long getIdFromToken(@Valid @RequestBody GetIdFromTokenRequest getIdFromTokenRequest) {
 return tokenProvider.getUserIdFromJWT(getIdFromTokenRequest.getToken());

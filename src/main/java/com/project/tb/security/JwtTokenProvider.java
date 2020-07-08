@@ -2,6 +2,7 @@ package com.project.tb.security;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import com.project.tb.wrappers.UserPrincipal;
@@ -25,7 +26,6 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
                 .compact();
     }
-
     public Long getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey( SecurityConstants.SECRET)

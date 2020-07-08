@@ -17,7 +17,6 @@ import com.project.tb.services.CustomUserDetailsService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
     securedEnabled = true, // make sure that whenever we want to add very specific security , for the future
-    jsr250Enabled = true,
     prePostEnabled = true)
 //**checked**//
 public class SecurityConfig extends WebSecurityConfigurerAdapter{

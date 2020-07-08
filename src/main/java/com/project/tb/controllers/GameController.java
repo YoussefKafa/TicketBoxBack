@@ -2,6 +2,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,7 +34,7 @@ private MapValidationErrorService mapvalidationErrorService;
 private GameServices gameService;
 @Autowired
 private GameRepo gameRepo;
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @PostMapping("/save")
 public ResponseEntity<?> addGame(@Valid @RequestBody Game game, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
@@ -42,7 +43,7 @@ public ResponseEntity<?> addGame(@Valid @RequestBody Game game, BindingResult re
     Game game2=gameService.saveOrUpdate(game);
 return new ResponseEntity<Game>(game,HttpStatus.CREATED);
 }
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @PutMapping("/save")
 public void updateGame(@Valid @RequestBody Game game, BindingResult result){
 	System.out.println(game.toString()+" ++++++++++++++++++++++++++++++++++++++++++++++==");
@@ -52,12 +53,12 @@ public void updateGame(@Valid @RequestBody Game game, BindingResult result){
 public List<Game> allGames() {
 	return gameService.findAll();
 }
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @GetMapping("/count")
 public Long count() {
     return gameService.count();
 }
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @DeleteMapping("/deleteById/{id}")
 public void deleteById(@PathVariable Long id) {
 	gameService.deleteById(id);
@@ -66,29 +67,29 @@ public void deleteById(@PathVariable Long id) {
 public Optional<Game> findByName(@PathVariable Long id) {
     return gameService.findById(id);
 }
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @PostMapping("/addTeam/{gameId}/{teamId}")
 public void addTeam(@PathVariable Long gameId, @PathVariable Long teamId) {
 	 gameService.addTeam(gameId, teamId);
 }
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @PostMapping("/addStadium/{gameId}/{stadiumId}")
 public ResponseEntity<?> addStadium(@PathVariable Long gameId,@PathVariable Long stadiumId) {
 	 gameService.addStadium(gameId,stadiumId);
 	 Optional<Game> game=gameService.findById(gameId);
 	 return new ResponseEntity<Game>(game.get(),HttpStatus.CREATED);
 }
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @DeleteMapping("/deleteTeams/{gameId}")
 public void deleteTeams(@PathVariable Long gameId) {
 	gameService.deleteTeams(gameId);
 }
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @DeleteMapping("/deleteTeam/{gameId}/{teamId}")
 public void deleteTeam(@PathVariable Long gameId,@PathVariable Long teamId) {
 	 gameService.deleteTeam(gameId,teamId);
 }
-@PreAuthorize("hasRole('ADMIN')")
+@Secured({ "ROLE_ADMIN"})
 @GetMapping("/salesCount")
 public int salesCount() {
 	return gameService.salesCount();

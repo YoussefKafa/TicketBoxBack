@@ -3,6 +3,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -83,7 +84,7 @@ class UserController {
 		User user1 = userService.saveUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
-	@PreAuthorize("hasRole('USER','ADMIN')")
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@GetMapping("/show/findById/{userId}")
 	public User findById(@PathVariable Long userId) {
 		return userService.findById(userId);

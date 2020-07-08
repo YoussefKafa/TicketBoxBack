@@ -18,6 +18,7 @@ import com.project.tb.services.MapValidationErrorService;
 import com.project.tb.exceptions.EmployeeUniqueException;
 import com.project.tb.models.Employee;
 import com.project.tb.services.EmployeeServices;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/admin")
 class EmployeeController{
