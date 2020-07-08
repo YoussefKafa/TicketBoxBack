@@ -84,7 +84,7 @@ class UserController {
 		User user1 = userService.saveUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
-	@Secured({"ROLE_USER","ROLE_ADMIN"})
+	@Secured({"ROLE_USER","ROLE_ADMIN","ROLE_DISTU"})
 	@GetMapping("/show/findById/{userId}")
 	public User findById(@PathVariable Long userId) {
 		return userService.findById(userId);
