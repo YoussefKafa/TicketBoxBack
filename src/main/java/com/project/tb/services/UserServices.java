@@ -11,6 +11,7 @@ import com.project.tb.dao.*;
 import com.project.tb.exceptions.SomeThingWentWrong;
 import com.project.tb.exceptions.UserException;
 import com.project.tb.models.User;
+import com.project.tb.payload.CreditRequest;
 import com.sun.istack.FinalArrayList;
 
 @Service
@@ -68,6 +69,9 @@ public class UserServices {
 	}
 public void addCredit(int credit, long id) {
 	userRepo.addCredit(credit, id);
+}
+public void addCreditByEmail(CreditRequest creditRequest) {
+	userRepo.addCredit(creditRequest.getCredit(), userRepo.findByEmail(creditRequest.getEmail()).getId());
 }
 	public void deleteAll() {
 		userRepo.deleteAll();

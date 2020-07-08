@@ -21,6 +21,7 @@ import com.project.tb.dao.UserRepo;
 import com.project.tb.exceptions.EmployeeUniqueException;
 import com.project.tb.exceptions.ResourceNotFoundException;
 import com.project.tb.models.User;
+import com.project.tb.payload.CreditRequest;
 import com.project.tb.payload.UserIdentityAvailability;
 import com.project.tb.payload.UserProfile;
 import com.project.tb.payload.UserSummary;
@@ -110,6 +111,11 @@ class UserController {
 	@PostMapping("/admin/addCredit/{userId}/{credit}")
 	public void addCredit(@PathVariable long userId,@PathVariable int credit) {
 		userService.addCredit(credit, userId);
+	}
+	@Secured({"ROLE_DISTU","ROLE_ADMIN"})
+	@PostMapping("/admin/addCreditByEmail")
+	public void addCredit(@RequestBody CreditRequest creditRequest) {
+		userService.addCreditByEmail(creditRequest);
 	}
     @PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/admin/statistics/countFemaleUsers")

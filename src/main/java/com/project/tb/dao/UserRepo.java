@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import com.project.tb.models.User;
+import com.project.tb.payload.CreditRequest;
 
 @Repository
 public interface UserRepo extends CrudRepository<User, Long> {
@@ -44,4 +45,5 @@ public interface UserRepo extends CrudRepository<User, Long> {
 	@Modifying
 	@Query("UPDATE User s  set s.credit = s.credit+:credit where s.id = :id")
 	void addCredit(int credit,Long id);
+
 }
