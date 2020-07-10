@@ -73,6 +73,9 @@ public void addCredit(int credit, long id) {
 public void addCreditByEmail(CreditRequest creditRequest) {
 	userRepo.addCredit(creditRequest.getCredit(), userRepo.findByEmail(creditRequest.getEmail()).getId());
 }
+public User findByEmail(String email) {
+	return userRepo.findByEmail(email);
+}
 	public void deleteAll() {
 		userRepo.deleteAll();
 	}
