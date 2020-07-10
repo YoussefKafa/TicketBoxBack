@@ -58,7 +58,7 @@ class UserController {
 		return userService.findById(userId);
 	}
 //tested
-	@Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN","ROLE_DISTU"})
 	@GetMapping("/show/admin/findAll")
 	public List<User> allUsers() {
 		return userService.findAll();
