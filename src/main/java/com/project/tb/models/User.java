@@ -1,5 +1,7 @@
 package com.project.tb.models;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -7,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.NaturalId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.tb.payload.CreditRequest;
 //ManyToMany with Tickets
 //OneToOne with TicketsList
 @Entity
@@ -47,6 +50,9 @@ public class User extends DateAudit {
 	@JsonIgnore
 	private java.util.Set<Ticket> tickets = new HashSet<>();
 	private int credit=0;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+	@JsonIgnore
+	private List<CreditRequest> creditRequest = new ArrayList<>();
 	///////////////////////////////////////////
 	///////////////////////////////////////////
 	public Long getId() {
