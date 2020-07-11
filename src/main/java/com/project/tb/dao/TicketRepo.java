@@ -23,4 +23,5 @@ public interface TicketRepo extends CrudRepository <Ticket , Long>{
 		@Modifying
 		@Query(value="DELETE from ticket where ticket_id=:ticketId",nativeQuery = true)
 	void deleteTicket(@Param("ticketId") Long ticketId);
+	
 }
