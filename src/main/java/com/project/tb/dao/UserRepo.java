@@ -1,5 +1,6 @@
 package com.project.tb.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,9 @@ public interface UserRepo extends CrudRepository<User, Long> {
 	public User findByEmail(String email);
 
 	public User getById(Long id);
+
+	@Query(value = "SELECT ticket_id from user_tickets where user_id=:id", nativeQuery = true)
+	public List<BigInteger> getTicketsByUserId(int id);
 
 	@Query(value = "SELECT COUNT(gender) from user where gender=1", nativeQuery = true)
 	public int countMaleUsers();
@@ -40,10 +44,12 @@ public interface UserRepo extends CrudRepository<User, Long> {
 			+ "       sum(case when age>=70 then 1 else 0 end) as Fclass,\r\n" + "       sum(1) as total\r\n"
 			+ "from user;", nativeQuery = true)
 	public List<Object[]> countAgeGroupsOfUsers();
+
 	Boolean existsByEmail(String email);
+
 	@Transactional
 	@Modifying
 	@Query("UPDATE User s  set s.credit = s.credit+:credit where s.id = :id")
-	void addCredit(int credit,Long id);
+	void addCredit(int credit, Long id);
 
 }

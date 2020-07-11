@@ -1,5 +1,6 @@
 package com.project.tb.services;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -87,5 +88,8 @@ public User findByEmail(String email) {
 	}
 	public List<Object[]> countAgeGroupsOfUsers() {
 		return userRepo.countAgeGroupsOfUsers();
+	}
+	public List<BigInteger> getTicketsByUserId(int id){
+		return userRepo.getTicketsByUserId(id);
 	}
 }

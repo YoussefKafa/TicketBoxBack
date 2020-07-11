@@ -16,6 +16,10 @@ import com.project.tb.payload.CreditRequest;
 //user details take care of user security and password	// things
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class User extends DateAudit {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -46,7 +50,11 @@ public class User extends DateAudit {
 	        this.age=age;
 	        this.gender=gender;
 	    }
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+                },mappedBy = "users")
 	@JsonIgnore
 	private java.util.Set<Ticket> tickets = new HashSet<>();
 	private int credit=0;
@@ -114,6 +122,12 @@ public class User extends DateAudit {
 	}
 	public void setCredit(int cash) {
 		this.credit = cash;
+	}
+	public List<CreditRequest> getCreditRequest() {
+		return creditRequest;
+	}
+	public void setCreditRequest(List<CreditRequest> creditRequest) {
+		this.creditRequest = creditRequest;
 	}
 
 	////////////////////////////////////

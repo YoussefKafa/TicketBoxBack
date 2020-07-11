@@ -2,6 +2,7 @@ package com.project.tb.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,6 +39,11 @@ return new ResponseEntity<Ticket>(ticket,HttpStatus.CREATED);
 @GetMapping("/show/findAll")
 public List<Ticket> allTickets() {
 	return ticketService.findAll();
+}
+@Secured({"ROLE_ADMIN","ROLE_DISTU","ROLE_USER"})
+@GetMapping("/findById/{id}")
+public Ticket findById(@PathVariable String id){
+	return ticketService.findById(Long.parseLong(id)).get();
 }
 @PreAuthorize("hasRole('ADMIN')")
 @GetMapping("/count")

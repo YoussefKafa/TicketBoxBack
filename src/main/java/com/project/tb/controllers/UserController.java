@@ -23,6 +23,7 @@ import com.project.tb.validator.UserValidator;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -113,5 +114,10 @@ class UserController {
 	public ResponseEntity<?> deleteAll() {
 		userService.deleteAll();
 		return new ResponseEntity<String>("All Users were deleted", HttpStatus.OK);
+	}
+	@Secured({"ROLE_ADMIN","ROLE_DISTU","ROLE_USER"})
+	@GetMapping("/getTicketsByUserId/{userId}")
+	public List<BigInteger> getTicketsByUserId(@PathVariable String userId){
+		return userService.getTicketsByUserId(Integer.parseInt(userId));
 	}
 }

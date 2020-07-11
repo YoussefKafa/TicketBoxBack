@@ -16,6 +16,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Ticket extends DateAudit implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	@Column(name = "ticket_id",unique = true, nullable = false)
@@ -34,7 +38,11 @@ public class Ticket extends DateAudit implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "game_id", updatable = true, nullable = true)
 	private Game game;
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+                })
     @JoinTable(
         name = "User_tickets", 
         joinColumns = { @JoinColumn(name = "ticket_id") }, 
