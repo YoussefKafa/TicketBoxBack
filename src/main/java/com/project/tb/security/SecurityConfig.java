@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/**/*.html",
                 "/**/*.css",
                 "/**/*.js",
-                "/api/team/show/findAll",
+                "/api/team/show/**",
                 "/api/stadium/show/findAll",
                 "/api/ticket/show/findAll",
                 "/api/game/show/**",
