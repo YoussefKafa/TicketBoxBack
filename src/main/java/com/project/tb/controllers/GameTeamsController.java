@@ -59,12 +59,10 @@ public class GameTeamsController {
 	     Optional<Game> game2=gameRepo.findById((long)game_id);
 	     return new ResponseEntity<Game>(game2.get(),HttpStatus.CREATED);
 	}
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/show/findAll")
 	public List<GameTeams> allGameTeams() {
 		return gameTeamsServices.findAll();
 	}
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/show/findByGameId/{game_id}")
 	public ResponseEntity<?>  findByGameId(@PathVariable Long game_id) {
 	 Optional<GameTeams> gameTeams= gameTeamsServices.findByGameId(game_id);
