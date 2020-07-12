@@ -15,6 +15,6 @@ public static final String GAMETEAMS_URL = "/api/gameTeams/**";
 public static final String SECRET = "SecretKeyToGenJWTs";
 public static final String TOKEN_PREFIX = "Bearer "; //"Give the bearer of this token access".
 public static final String HEADER_STRING = "Authorization";
-public static final long EXPIRATION_TIME = 400_000; //in ms // _ for better readability
+public static final long EXPIRATION_TIME = 900_000; //in ms // _ for better readability
 
 }
