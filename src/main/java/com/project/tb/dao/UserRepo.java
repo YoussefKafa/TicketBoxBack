@@ -29,6 +29,8 @@ public interface UserRepo extends CrudRepository<User, Long> {
 
 	@Query(value = "SELECT COUNT(gender) from user where gender=0", nativeQuery = true)
 	public int countFemaleUsers();
+	@Query(value = "select id from roles where name=:name", nativeQuery = true)
+	public int getRoleIdFromRoleName(String name);
 
 	/*
 	 * List<Object[]> Each Object[] contains one record returned by the database. We

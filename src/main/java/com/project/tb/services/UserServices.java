@@ -1,12 +1,18 @@
 package com.project.tb.services;
 
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
 import com.project.tb.exceptions.SomeThingWentWrong;
@@ -19,20 +25,19 @@ import com.sun.istack.FinalArrayList;
 public class UserServices {
 	@Autowired
 	private UserRepo userRepo;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; // comes with spring security
-
 	public User saveUser(User user) throws Exception {
-		try {
-			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); // encode the password
-			// for the one above also we can use @jsonIgnore in User class
-			// create a ticketslist every time you save or update a user
-			// if the user is new then create the list
+		Optional<User>user1 =userRepo.findById(user.getId());
+		user.setCreatedAt(user1.get().getCreatedAt());
+		user.setUpdatedAt(new Date().toInstant());
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 			return userRepo.save(user);
-		} catch (Exception e) {
-			throw new UserException("User email:   " + user.getEmail().toLowerCase() + " is already exists");
-		}
 	}
+	
 //tested
 	public List<User> findAll() {
 		Iterable<User> it = userRepo.findAll();
@@ -91,5 +96,8 @@ public User findByEmail(String email) {
 	}
 	public List<BigInteger> getTicketsByUserId(int id){
 		return userRepo.getTicketsByUserId(id);
+	}
+	public int getRoleIdFromRoleName(String name) {
+		return userRepo.getRoleIdFromRoleName(name);
 	}
 }

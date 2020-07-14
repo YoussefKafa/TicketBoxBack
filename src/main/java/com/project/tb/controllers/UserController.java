@@ -44,12 +44,9 @@ class UserController {
 		Boolean isAvailable = !userRepository.existsByEmail(email);
 		return new UserIdentityAvailability(isAvailable);
 	}
+	@Secured({"ROLE_USER","ROLE_ADMIN","ROLE_DISTU"})
 	@RequestMapping(value = "/save")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) throws Exception {
-		userValidator.validate(user, result);
-		ResponseEntity<?> errorMap = mapvalidationErrorService.mapValidationErrorService(result);
-		if (errorMap != null)
-			return errorMap;
 		User user1 = userService.saveUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
@@ -119,5 +116,10 @@ class UserController {
 	@GetMapping("/getTicketsByUserId/{userId}")
 	public List<BigInteger> getTicketsByUserId(@PathVariable String userId){
 		return userService.getTicketsByUserId(Integer.parseInt(userId));
+	}
+	@Secured({"ROLE_USER","ROLE_ADMIN","ROLE_DISTU"})
+	@GetMapping("/getRoleIdFromRoleName/{name}")
+	public int getRoleIdFromRoleName(@PathVariable String name) {
+		return userService.getRoleIdFromRoleName(name);
 	}
 }
