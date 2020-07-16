@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import com.project.tb.dao.*;
+import com.project.tb.exceptions.PasswordIsntCorrectException;
 import com.project.tb.exceptions.SomeThingWentWrong;
 import com.project.tb.exceptions.UserException;
 import com.project.tb.models.User;
@@ -25,16 +28,17 @@ import com.sun.istack.FinalArrayList;
 public class UserServices {
 	@Autowired
 	private UserRepo userRepo;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; // comes with spring security
 	public User saveUser(User user) throws Exception {
 		Optional<User>user1 =userRepo.findById(user.getId());
+		System.out.println(bCryptPasswordEncoder.matches(user.getPassword(), user1.get().getPassword()));
+		if ( !bCryptPasswordEncoder.matches(user.getPassword(), user1.get().getPassword())) {
+			throw new PasswordIsntCorrectException();
+		}
 		user.setCreatedAt(user1.get().getCreatedAt());
 		user.setUpdatedAt(new Date().toInstant());
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			return userRepo.save(user);
 	}
 	

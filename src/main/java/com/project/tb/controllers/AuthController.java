@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +45,8 @@ public class AuthController {
     @Autowired
     RoleRepo roleRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
+    @Autowired 
+    BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     JwtTokenProvider tokenProvider;
 
@@ -77,7 +77,7 @@ public class AuthController {
         User user = new User
        (signUpRequest.getName(), signUpRequest.getEmail(), signUpRequest.getPassword(),signUpRequest.getAge(),signUpRequest.isGender());
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new AppException("User Role not set."));
