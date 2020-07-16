@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +24,7 @@ import com.project.tb.exceptions.PasswordIsntCorrectException;
 import com.project.tb.exceptions.SomeThingWentWrong;
 import com.project.tb.exceptions.UserException;
 import com.project.tb.models.User;
+import com.project.tb.payload.ChangePasswordRequest;
 import com.project.tb.payload.CreditRequest;
 import com.sun.istack.FinalArrayList;
 
@@ -103,5 +107,13 @@ public User findByEmail(String email) {
 	}
 	public int getRoleIdFromRoleName(String name) {
 		return userRepo.getRoleIdFromRoleName(name);
+	}
+
+	public void changePassword(ChangePasswordRequest changePasswordRequest) {
+		Optional<User>user1 =userRepo.findById(Long.parseLong(changePasswordRequest.getIdOfUser()));
+		if ( !bCryptPasswordEncoder.matches(changePasswordRequest.getOldPass(), user1.get().getPassword())) {
+			throw new PasswordIsntCorrectException();
+		}
+		userRepo.changePassword(bCryptPasswordEncoder.encode(changePasswordRequest.getNewPass()), Long.parseLong(changePasswordRequest.getIdOfUser()));
 	}
 }

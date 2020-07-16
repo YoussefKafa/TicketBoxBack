@@ -4,26 +4,34 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import com.project.tb.dao.CreditRequestRepo;
 import com.project.tb.dao.UserRepo;
 import com.project.tb.exceptions.EmployeeUniqueException;
 import com.project.tb.models.User;
+import com.project.tb.payload.ChangePasswordRequest;
 import com.project.tb.payload.UserIdentityAvailability;
 import com.project.tb.services.UserServices;
 import com.project.tb.validator.UserValidator;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.security.Principal;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -122,4 +130,10 @@ class UserController {
 	public int getRoleIdFromRoleName(@PathVariable String name) {
 		return userService.getRoleIdFromRoleName(name);
 	}
+	@Secured({"ROLE_ADMIN","ROLE_DISTU","ROLE_USER"})
+@PostMapping("/changePassword")
+public String changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+	userService.changePassword(changePasswordRequest);
+	return "Password Updated successfully";
+}
 }
