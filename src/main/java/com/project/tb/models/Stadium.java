@@ -38,7 +38,8 @@ private String name;
 @NotBlank(message = "city cannot be blank: team city is required")
 private String city;
 @Lob
-@Column(name="image", nullable=true, columnDefinition="mediumblob") //medium is 16mb
+@Column(name="image", nullable=true, columnDefinition="mediumblob")//medium is 16mb
+@JsonIgnore
 private String image="0";
 @OneToMany(mappedBy = "stadium")
 @JsonIgnore

@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import com.project.tb.dao.CreditRequestRepo;
 import com.project.tb.dao.UserRepo;
 import com.project.tb.exceptions.EmployeeUniqueException;
+import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
 import com.project.tb.payload.ChangePasswordRequest;
 import com.project.tb.payload.UserIdentityAvailability;
@@ -32,6 +33,7 @@ import com.project.tb.services.MapValidationErrorService;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -122,7 +124,7 @@ class UserController {
 	}
 	@Secured({"ROLE_ADMIN","ROLE_DISTU","ROLE_USER"})
 	@GetMapping("/getTicketsByUserId/{userId}")
-	public List<BigInteger> getTicketsByUserId(@PathVariable String userId){
+	public ArrayList<Ticket> getTicketsByUserId(@PathVariable String userId){
 		return userService.getTicketsByUserId(Integer.parseInt(userId));
 	}
 	@Secured({"ROLE_USER","ROLE_ADMIN","ROLE_DISTU"})

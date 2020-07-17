@@ -23,6 +23,7 @@ import com.project.tb.dao.*;
 import com.project.tb.exceptions.PasswordIsntCorrectException;
 import com.project.tb.exceptions.SomeThingWentWrong;
 import com.project.tb.exceptions.UserException;
+import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
 import com.project.tb.payload.ChangePasswordRequest;
 import com.project.tb.payload.CreditRequest;
@@ -32,6 +33,8 @@ import com.sun.istack.FinalArrayList;
 public class UserServices {
 	@Autowired
 	private UserRepo userRepo;
+	@Autowired
+	private TicketRepo ticketrepo;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; // comes with spring security
 	public User saveUser(User user) throws Exception {
@@ -102,8 +105,19 @@ public User findByEmail(String email) {
 	public List<Object[]> countAgeGroupsOfUsers() {
 		return userRepo.countAgeGroupsOfUsers();
 	}
-	public List<BigInteger> getTicketsByUserId(int id){
-		return userRepo.getTicketsByUserId(id);
+	public ArrayList<Ticket> getTicketsByUserId(int id){
+		List<BigInteger> idOfTickets= userRepo.getTicketsByUserId(id);
+		Ticket ticket1= new Ticket();
+		ArrayList<Ticket> tickets=new ArrayList<Ticket>();
+		for (BigInteger bigInteger : idOfTickets) {
+			System.out.println(bigInteger+"******************************************************");
+			try {
+		Optional<Ticket> ticket= ticketrepo.findById(Long.parseLong(bigInteger.toString()));
+		 ticket1=ticket.get();}
+			catch (Exception e) {System.out.println(e.getMessage());}
+		tickets.add(ticket1);	
+		}
+		return tickets;
 	}
 	public int getRoleIdFromRoleName(String name) {
 		return userRepo.getRoleIdFromRoleName(name);

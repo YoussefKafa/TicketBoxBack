@@ -27,7 +27,7 @@ public class Ticket extends DateAudit implements Serializable{
 	@Column(updatable = false)
 	// we are going to use it to find an individual ticket in the TicketsList
 	private String ticketSequence;
-	private String[] gates;
+	private String gates;
 	private String qrCode;
 	private int price;
 	private int counter;
@@ -35,6 +35,7 @@ public class Ticket extends DateAudit implements Serializable{
 	private String releaseDate;
 	private String endDate;
 	private String returnDate;
+	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "game_id", updatable = true, nullable = true)
 	private Game game;
@@ -62,12 +63,6 @@ public class Ticket extends DateAudit implements Serializable{
 	}
 	public void setQrCode(String qrCode) {
 		this.qrCode = qrCode;
-	}
-	public String[] getGates() {
-		return gates;
-	}
-	public void setGates(String[] gates) {
-		this.gates = gates;
 	}
 	public Long getId() {
 		return id;
@@ -122,5 +117,11 @@ public class Ticket extends DateAudit implements Serializable{
 	}
 	public void setGame(Game game) {
 		this.game = game;
+	}
+	public String getGates() {
+		return gates;
+	}
+	public void setGates(String gates) {
+		this.gates = gates;
 	}
 }
