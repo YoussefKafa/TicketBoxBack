@@ -39,7 +39,6 @@ private String name;
 private String city;
 @Lob
 @Column(name="image", nullable=true, columnDefinition="mediumblob")//medium is 16mb
-@JsonIgnore
 private String image="0";
 @OneToMany(mappedBy = "stadium")
 @JsonIgnore
