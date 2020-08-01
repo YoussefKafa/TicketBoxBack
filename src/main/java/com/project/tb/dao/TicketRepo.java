@@ -23,5 +23,9 @@ public interface TicketRepo extends CrudRepository <Ticket , Long>{
 		@Modifying
 		@Query(value="DELETE from ticket where ticket_id=:ticketId",nativeQuery = true)
 	void deleteTicket(@Param("ticketId") Long ticketId);
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE ticket SET counter=counter -1 where ticket_id=:ticketId",nativeQuery = true)
+void decreaseCounter(@Param("ticketId") Long ticketId);
 	
 }

@@ -129,7 +129,6 @@ public class User extends DateAudit {
 	public void setCreditRequest(List<CreditRequest> creditRequest) {
 		this.creditRequest = creditRequest;
 	}
-
 	////////////////////////////////////
 	////////////////////////////////////
 	

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.project.tb.services.BookRequestsService;
 import com.project.tb.services.CreditRequestServices;
 @SpringBootApplication
 @EnableJpaAuditing
@@ -17,6 +18,10 @@ public class OnlyatestApplication {
 	@Bean
 	CreditRequestServices creditRequestServices() {
 		return new CreditRequestServices();
+	}
+	@Bean
+	BookRequestsService bookRequestsService() {
+		return new BookRequestsService();
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(OnlyatestApplication.class, args);

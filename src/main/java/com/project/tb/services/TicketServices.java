@@ -70,4 +70,7 @@ public class TicketServices {
 		public Optional<Ticket> findById(Long id) {
 			return ticketRepo.findById(id);
 		}
+		public void decreaseCounter(Long ticket_id) {
+			ticketRepo.decreaseCounter(ticket_id);
+		}
 }

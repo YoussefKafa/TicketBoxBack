@@ -58,5 +58,9 @@ public interface UserRepo extends CrudRepository<User, Long> {
 	@Modifying
 	@Query("UPDATE User s  set s.password =:newPass where s.id = :id")
 	void changePassword(String newPass, Long id);
+	@Transactional
+	@Modifying
+	@Query("UPDATE User s  set s.credit =s.credit-:price where s.id = :id")
+	void decreaseCredit(int price,Long id);
 	
 }

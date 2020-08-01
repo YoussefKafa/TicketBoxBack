@@ -22,4 +22,5 @@ public ArrayList<CreditRequest> findAll() {
 public void addUser(Long credit_id,Long user_id) {
 	creditRequestRepo.addUser(credit_id, user_id);
 }
+
 }
