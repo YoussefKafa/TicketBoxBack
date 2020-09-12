@@ -6,6 +6,7 @@ import com.project.tb.dao.BookRequestRepo;
 import com.project.tb.dao.GameRepo;
 import com.project.tb.dao.TicketRepo;
 import com.project.tb.dao.UserRepo;
+import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
 
@@ -30,7 +31,12 @@ public class BookRequestsService {
 		ticketRepo.decreaseCounter(bookRequest.getTicketId());
 		Optional<Ticket> tikTicket=ticketRepo.findById(bookRequest.getTicketId());
 		int price=tikTicket.get().getPrice();
-		userRepo.decreaseCredit(price, userRepo.findByEmail(bookRequest.getEmail()).getId());
+		int credit=userRepo.findByEmail(bookRequest.getEmail()).getCredit();
+		if(credit>=price) {
+		userRepo.decreaseCredit(price, userRepo.findByEmail(bookRequest.getEmail()).getId());}
+		else {
+			throw new ModelException("Dear User: You don't have enough credit!");
+		}
 		gameRepo.increaseSaleCounter(tikTicket.get().getGame().getId());
 		bookRequestRepo.save(bookRequest);
 	}
