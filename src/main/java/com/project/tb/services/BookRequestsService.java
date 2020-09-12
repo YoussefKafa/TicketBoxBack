@@ -31,7 +31,8 @@ public class BookRequestsService {
 		ticketRepo.decreaseCounter(bookRequest.getTicketId());
 		Optional<Ticket> tikTicket=ticketRepo.findById(bookRequest.getTicketId());
 		int price=tikTicket.get().getPrice();
-		int credit=userRepo.findByEmail(bookRequest.getEmail()).getCredit();
+		User user=userRepo.findByEmail(bookRequest.getEmail());
+		int credit=user.getCredit();
 		if(credit>=price) {
 		userRepo.decreaseCredit(price, userRepo.findByEmail(bookRequest.getEmail()).getId());}
 		else {
