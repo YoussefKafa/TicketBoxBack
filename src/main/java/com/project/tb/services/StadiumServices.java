@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
 import com.project.tb.models.*;
-import com.project.tb.exceptions.StadiumUniqueException;
+import com.project.tb.exceptions.ModelException;
 @Service
 public class StadiumServices<E>{
     @Autowired
@@ -27,7 +27,7 @@ public class StadiumServices<E>{
         	return stadiumRepo.save(stad);
         		}
         } catch ( Exception e) {
-            throw new StadiumUniqueException("Stadium  "+ stad.getName().toLowerCase()+ " is already exists");
+            throw new ModelException("Stadium  "+ stad.getName().toLowerCase()+ " is already exists");
         }
         
     }

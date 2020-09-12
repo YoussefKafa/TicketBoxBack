@@ -3,12 +3,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
+import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.*;
-import com.project.tb.exceptions.GameUniqueException;
 @Service
 public class GameServices{
     @Autowired
@@ -28,7 +27,7 @@ public class GameServices{
 			return gameRepo.save(game);
 			}
         } catch (final Exception e) {
-            throw new GameUniqueException(e.getMessage());
+            throw new ModelException(e.getMessage());
         }
         
     }

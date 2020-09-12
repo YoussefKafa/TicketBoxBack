@@ -3,11 +3,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.TicketRepo;
-import com.project.tb.exceptions.TicketUniqueException;
+import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
 @Service
 public class TicketServices {
@@ -35,7 +34,7 @@ public class TicketServices {
 	        	return ticketRepo.save(ticket22);
 	        }
 	        } catch (final Exception e) {
-	            throw new TicketUniqueException("Ticket  "+ ticket.getId()+ " is already exists"+e.getMessage());
+	            throw new ModelException("Ticket  "+ ticket.getId()+ " is already exists"+e.getMessage());
 	        }
 	        
 	    }

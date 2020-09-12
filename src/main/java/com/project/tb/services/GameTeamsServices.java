@@ -1,16 +1,11 @@
 package com.project.tb.services;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.GameTeamsRepo;
-import com.project.tb.exceptions.TeamUniqueException;
 import com.project.tb.models.GameTeams;
-import com.project.tb.models.Team;
-import com.project.tb.models.User;
 
 @Service
 public class GameTeamsServices {

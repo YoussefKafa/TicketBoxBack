@@ -2,11 +2,10 @@ package com.project.tb.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
-import com.project.tb.exceptions.TeamUniqueException;
+import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.*;
 @Service
 public class TeamServices{
@@ -16,7 +15,7 @@ public class TeamServices{
         try {
             return teamRepo.save(team);
         } catch (final Exception e) {
-            throw new TeamUniqueException("Team  "+ team.getName().toLowerCase()+ " is already exists");
+            throw new ModelException("Team  "+ team.getName().toLowerCase()+ " is already exists");
         }
         
     }

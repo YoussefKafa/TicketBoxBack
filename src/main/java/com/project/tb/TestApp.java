@@ -9,10 +9,9 @@ import com.project.tb.services.BookRequestsService;
 import com.project.tb.services.CreditRequestServices;
 @SpringBootApplication
 @EnableJpaAuditing
-public class OnlyatestApplication {
+public class TestApp {
 	@Bean
 	BCryptPasswordEncoder bCryptPasswordEncoder() {
-		// we've created this bean here so we can autowired it with user services
 		return new BCryptPasswordEncoder();
 	}
 	@Bean
@@ -24,6 +23,6 @@ public class OnlyatestApplication {
 		return new BookRequestsService();
 	}
 	public static void main(String[] args) {
-		SpringApplication.run(OnlyatestApplication.class, args);
+		SpringApplication.run(TestApp.class, args);
 	}
 }

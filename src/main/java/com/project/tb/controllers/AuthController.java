@@ -1,13 +1,12 @@
 package com.project.tb.controllers;
-
 import com.project.tb.payload.*;
 import com.project.tb.dao.RoleRepo;
 import com.project.tb.dao.UserRepo;
 import com.project.tb.exceptions.AppException;
+import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Role;
 import com.project.tb.models.RoleName;
 import com.project.tb.models.User;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +68,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "email is already taken!"),
+            return new ResponseEntity(new ModelException("email is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -90,7 +89,7 @@ public class AuthController {
                 .fromCurrentContextPath().path("/api/users/{username}")
                 .buildAndExpand(result.getName()).toUri();
 
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+        return ResponseEntity.created(location).body("User registered successfully");
     }
     @Secured({"ROLE_ADMIN","ROLE_USER","ROLE_DISTU"})
     @PostMapping("/getIdFromToken")

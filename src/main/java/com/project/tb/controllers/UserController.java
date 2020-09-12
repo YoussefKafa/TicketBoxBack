@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,27 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import com.project.tb.dao.CreditRequestRepo;
 import com.project.tb.dao.UserRepo;
-import com.project.tb.exceptions.EmployeeUniqueException;
+import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
 import com.project.tb.payload.ChangePasswordRequest;
-import com.project.tb.payload.UserIdentityAvailability;
 import com.project.tb.services.UserServices;
-import com.project.tb.validator.UserValidator;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -44,16 +35,9 @@ class UserController {
 	@Autowired
 	private UserServices userService;
 	@Autowired
-	private UserValidator userValidator;
-	@Autowired
 	private UserRepo userRepository;
 	@Autowired
 	private CreditRequestRepo creditRequestRepo;
-	@GetMapping("/user/checkEmailAvailability")
-	public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
-		Boolean isAvailable = !userRepository.existsByEmail(email);
-		return new UserIdentityAvailability(isAvailable);
-	}
 	@Secured({"ROLE_USER","ROLE_ADMIN","ROLE_DISTU"})
 	@RequestMapping(value = "/save")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) throws Exception {
@@ -111,7 +95,7 @@ class UserController {
 	public ResponseEntity<?> deleteEmployeeById(@PathVariable String userId) {
 		User user = userService.findById(Long.parseLong(userId));
 		if (user == null) {
-			throw new EmployeeUniqueException("User with id : " + userId + " does not exist");
+			throw new ModelException("User with id : " + userId + " does not exist");
 		}
 		userService.deleteById(Long.parseLong(userId));
 		return new ResponseEntity<String>("User with id " + userId + " was deleted", HttpStatus.OK);

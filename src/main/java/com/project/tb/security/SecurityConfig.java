@@ -16,9 +16,8 @@ import com.project.tb.services.CustomUserDetailsService;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-    securedEnabled = true, // make sure that whenever we want to add very specific security , for the future
+    securedEnabled = true,
     prePostEnabled = true)
-//**checked**//
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -70,8 +69,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .permitAll()
             .anyRequest()
                 .authenticated();
-
-// Add our custom JWT security filter
 http.addFilterBefore(jwtauthinticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

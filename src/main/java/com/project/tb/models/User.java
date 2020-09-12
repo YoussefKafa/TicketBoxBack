@@ -10,29 +10,17 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.NaturalId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.tb.payload.CreditRequest;
-//ManyToMany with Tickets
-//OneToOne with TicketsList
 @Entity
-//user details take care of user security and password	// things
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class User extends DateAudit {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@NaturalId
-    @NotBlank
-    @Size(max = 40)
-    @Email
 	private String email;
 	private int age;
 	private boolean gender;
-	 @NotBlank
-	    @Size(max = 100)
 	private String password;
 	 @ManyToMany(fetch = FetchType.LAZY)
 	    @JoinTable(name = "user_roles",

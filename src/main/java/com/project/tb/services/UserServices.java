@@ -20,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.project.tb.dao.*;
-import com.project.tb.exceptions.PasswordIsntCorrectException;
-import com.project.tb.exceptions.SomeThingWentWrong;
-import com.project.tb.exceptions.UserException;
+import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
 import com.project.tb.payload.ChangePasswordRequest;
@@ -41,7 +39,7 @@ public class UserServices {
 		Optional<User>user1 =userRepo.findById(user.getId());
 		System.out.println(bCryptPasswordEncoder.matches(user.getPassword(), user1.get().getPassword()));
 		if ( !bCryptPasswordEncoder.matches(user.getPassword(), user1.get().getPassword())) {
-			throw new PasswordIsntCorrectException();
+			throw new ModelException("Password is not correct.");
 		}
 		user.setCreatedAt(user1.get().getCreatedAt());
 		user.setUpdatedAt(new Date().toInstant());
@@ -69,10 +67,10 @@ public class UserServices {
 		try {
 		user2 = user.get();}
 		catch (NoSuchElementException e) {
-			throw new UserException("User with id: " + userId + " does not exist.");
+			throw new ModelException("User with id: " + userId + " does not exist.");
 		}
 		if (user2 == null)
-			throw new UserException("User with id : " + userId + " does not exist");
+			throw new ModelException("User with id : " + userId + " does not exist");
 		return user2;
 	}
 
@@ -81,7 +79,7 @@ public class UserServices {
 		Optional<User> user = userRepo.findById(userId);
 		User user2 = user.get();
 		if (user == null)
-			throw new UserException("User with id " + userId + " cannot be found");
+			throw new ModelException("User with id " + userId + " cannot be found");
 		userRepo.delete(user2);
 	}
 public void addCredit(int credit, long id) {
@@ -126,7 +124,7 @@ public User findByEmail(String email) {
 	public void changePassword(ChangePasswordRequest changePasswordRequest) {
 		Optional<User>user1 =userRepo.findById(Long.parseLong(changePasswordRequest.getIdOfUser()));
 		if ( !bCryptPasswordEncoder.matches(changePasswordRequest.getOldPass(), user1.get().getPassword())) {
-			throw new PasswordIsntCorrectException();
+			throw new ModelException("Password is not correct!");
 		}
 		userRepo.changePassword(bCryptPasswordEncoder.encode(changePasswordRequest.getNewPass()), Long.parseLong(changePasswordRequest.getIdOfUser()));
 	}
