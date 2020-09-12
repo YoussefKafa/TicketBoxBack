@@ -40,7 +40,6 @@ return new ResponseEntity<Ticket>(ticket,HttpStatus.CREATED);
 public List<Ticket> allTickets() {
 	return ticketService.findAll();
 }
-@Secured({"ROLE_ADMIN","ROLE_DISTU","ROLE_USER"})
 @GetMapping("/findById/{id}")
 public Ticket findById(@PathVariable String id){
 	return ticketService.findById(Long.parseLong(id)).get();
