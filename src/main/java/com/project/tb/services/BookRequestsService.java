@@ -28,7 +28,7 @@ public class BookRequestsService {
 		return bookRequestRepo.findByEmail(email);
 	}
 	public void save(BookRequests bookRequest) {
-		ticketRepo.decreaseCounter(bookRequest.getTicketId());
+	
 		Optional<Ticket> tikTicket=ticketRepo.findById(bookRequest.getTicketId());
 		int price=tikTicket.get().getPrice();
 		User user=userRepo.findByEmail(bookRequest.getEmail());
@@ -39,6 +39,7 @@ public class BookRequestsService {
 			throw new ModelException("Dear User: You don't have enough credit!");
 		}
 		gameRepo.increaseSaleCounter(tikTicket.get().getGame().getId());
+		ticketRepo.decreaseCounter(bookRequest.getTicketId());
 		bookRequestRepo.save(bookRequest);
 	}
 	public void delete(Long id) {
