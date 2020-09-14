@@ -8,5 +8,4 @@ import com.project.tb.payload.BookRequests;
 @Repository
 public interface BookRequestRepo extends CrudRepository <BookRequests , Long>{
 		List<BookRequests> findByEmail(String email);
-		
 	}

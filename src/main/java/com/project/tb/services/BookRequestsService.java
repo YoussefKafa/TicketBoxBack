@@ -2,6 +2,7 @@ package com.project.tb.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.zxing.WriterException;
 import com.project.tb.dao.BookRequestRepo;
 import com.project.tb.dao.GameRepo;
 import com.project.tb.dao.TicketRepo;
@@ -10,6 +11,7 @@ import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,7 @@ public class BookRequestsService {
 	{
 		return bookRequestRepo.findByEmail(email);
 	}
-	public void save(BookRequests bookRequest) {
+	public void save(BookRequests bookRequest) throws WriterException, IOException {
 	
 		Optional<Ticket> tikTicket=ticketRepo.findById(bookRequest.getTicketId());
 		int price=tikTicket.get().getPrice();
@@ -40,6 +42,7 @@ public class BookRequestsService {
 		}
 		gameRepo.increaseSaleCounter(tikTicket.get().getGame().getId());
 		ticketRepo.decreaseCounter(bookRequest.getTicketId());
+		QRCodeServices.createQRCode(user.getName(), user.getEmail());
 		bookRequestRepo.save(bookRequest);
 	}
 	public void delete(Long id) {
