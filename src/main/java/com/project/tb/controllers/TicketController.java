@@ -40,7 +40,7 @@ return new ResponseEntity<Ticket>(ticket,HttpStatus.CREATED);
 public List<Ticket> allTickets() {
 	return ticketService.findAll();
 }
-@GetMapping("/findById/{id}")
+@GetMapping("/show/findById/{id}")
 public Ticket findById(@PathVariable String id){
 	return ticketService.findById(Long.parseLong(id)).get();
 }
