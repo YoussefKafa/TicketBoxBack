@@ -20,23 +20,36 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 public class QRCodeServices {
-	static String charset = "UTF-8";
-	static String filePath = "D:\\TicketBoxBack\\rsrc\\qrCodes\\";
+	 static int QRCounter=0;
 	public static void createQRCode(String qrCodeData, String email)
 			throws WriterException, IOException {
+		String charset = "UTF-8";
+		 String filePath = "D:\\TicketBoxBack\\rsrc\\qrCodes\\";
+		 String preEmailString="$"+QRCounter+"$"; QRCounter++;
+		 email+=preEmailString;
 		email+=".png";
+		String fileNameEncodedString=email;
 		filePath+=email;
+		qrCodeData+="&";
+		qrCodeData+=fileNameEncodedString;
 		Map hintMap = new HashMap();
+		
+		
 		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+		
+		
 		BitMatrix matrix = new MultiFormatWriter().encode(
 				new String(qrCodeData.getBytes(charset), charset),
 				BarcodeFormat.QR_CODE, 200, 200, hintMap);
+		
+		
 		MatrixToImageWriter.writeToFile(matrix, filePath.substring(filePath
 				.lastIndexOf('.') + 1), new File(filePath));
 	}
-
 	public static String readQRCode(String email)
 			throws FileNotFoundException, IOException, NotFoundException {
+		String charset = "UTF-8";
+		 String filePath = "D:\\TicketBoxBack\\rsrc\\qrCodes\\";
 		email+=".png";
 		filePath+=email;
 		Map hintMap = new HashMap();
@@ -47,5 +60,9 @@ public class QRCodeServices {
 		Result qrCodeResult = new MultiFormatReader().decode(binaryBitmap,
 				hintMap);
 		return qrCodeResult.getText();
+	}
+	public boolean confirm(String decodedString, String ticketSequence) {
+		
+		return false;
 	}
 }

@@ -42,7 +42,7 @@ public class BookRequestsService {
 		}
 		gameRepo.increaseSaleCounter(tikTicket.get().getGame().getId());
 		ticketRepo.decreaseCounter(bookRequest.getTicketId());
-		QRCodeServices.createQRCode(user.getName(), user.getEmail());
+		QRCodeServices.createQRCode(user.getName()+"$"+tikTicket.get().getTicketSequence(), user.getEmail()+"$"+tikTicket.get().getTicketSequence());
 		bookRequestRepo.save(bookRequest);
 	}
 	public void delete(Long id) {
