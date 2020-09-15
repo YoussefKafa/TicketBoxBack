@@ -31,7 +31,7 @@ public class BookRequestsController {
 	public List<BookRequests> myReservations(@PathVariable String email){
 		return bookRequestsService.findByEmail(email);
 	}
-	@RequestMapping(value="/book", method=RequestMethod.GET)
+	@RequestMapping(value="/book", method=RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void book(@RequestBody BookRequests bookRequest) throws WriterException, IOException{
 		bookRequestsService.save(bookRequest);
