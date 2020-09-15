@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import com.project.tb.models.Ticket;
+import com.project.tb.payload.ConfirmTicketRequest;
+import com.project.tb.payload.TicketScanResult;
 import com.project.tb.services.TicketServices;
+
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
+import com.project.tb.services.QRCodeServices;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/ticket")
@@ -40,9 +45,14 @@ return new ResponseEntity<Ticket>(ticket,HttpStatus.CREATED);
 public List<Ticket> allTickets() {
 	return ticketService.findAll();
 }
+
 @GetMapping("/show/findById/{id}")
 public Ticket findById(@PathVariable String id){
 	return ticketService.findById(Long.parseLong(id)).get();
+}
+@GetMapping("/show/findByT/{t}")
+public boolean findByT(@PathVariable String t){
+	return ticketService.existsByTicketSequence(t);
 }
 @PreAuthorize("hasRole('ADMIN')")
 @GetMapping("/count")
@@ -65,5 +75,9 @@ public ResponseEntity<?> addGame(@PathVariable Long ticket_id,@PathVariable Long
 	 ticketService.addGame(ticket_id,game_id);
 	 Optional<Ticket> ticket=ticketService.findById(ticket_id);
 	 return new ResponseEntity<Ticket>(ticket.get(),HttpStatus.CREATED);
+}
+@GetMapping("/confirm")
+public TicketScanResult findById(@Valid @RequestBody ConfirmTicketRequest confirmTicketRequest){
+	return ticketService.scan(confirmTicketRequest.getContent());
 }
 }

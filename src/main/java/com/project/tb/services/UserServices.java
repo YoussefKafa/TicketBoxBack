@@ -30,7 +30,7 @@ import com.sun.istack.FinalArrayList;
 @Service
 public class UserServices {
 	@Autowired
-	private UserRepo userRepo;
+	private static UserRepo userRepo;
 	@Autowired
 	private TicketRepo ticketrepo;
 	@Autowired
@@ -127,5 +127,8 @@ public User findByEmail(String email) {
 			throw new ModelException("Password is not correct!");
 		}
 		userRepo.changePassword(bCryptPasswordEncoder.encode(changePasswordRequest.getNewPass()), Long.parseLong(changePasswordRequest.getIdOfUser()));
+	}
+	public boolean existsByEmail(String email) {
+		return userRepo.existsByEmail(email);
 	}
 }

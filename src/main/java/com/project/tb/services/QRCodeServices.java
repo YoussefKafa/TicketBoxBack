@@ -1,11 +1,16 @@
 package com.project.tb.services;
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.EncodeHintType;
@@ -19,6 +24,9 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.project.tb.dao.TicketRepo;
+import com.project.tb.payload.TicketScanResult;
+
 public class QRCodeServices {
 	 static int QRCounter=0;
 	public static void createQRCode(String qrCodeData, String email)
@@ -32,6 +40,7 @@ public class QRCodeServices {
 		filePath+=email;
 		qrCodeData+="&";
 		qrCodeData+=fileNameEncodedString;
+		
 		Map hintMap = new HashMap();
 		
 		
@@ -59,10 +68,8 @@ public class QRCodeServices {
 						ImageIO.read(new FileInputStream(filePath)))));
 		Result qrCodeResult = new MultiFormatReader().decode(binaryBitmap,
 				hintMap);
+		System.out.println(qrCodeResult.getText());
 		return qrCodeResult.getText();
 	}
-	public boolean confirm(String decodedString, String ticketSequence) {
-		
-		return false;
-	}
+	
 }
