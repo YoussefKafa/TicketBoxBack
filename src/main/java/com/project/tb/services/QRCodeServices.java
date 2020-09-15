@@ -28,9 +28,10 @@ import com.project.tb.dao.TicketRepo;
 import com.project.tb.payload.TicketScanResult;
 
 public class QRCodeServices {
-	 static int QRCounter=0;
+	
 	public static void createQRCode(String qrCodeData, String email)
 			throws WriterException, IOException {
+		  int QRCounter=new File("D:\\TicketBoxBack\\rsrc\\qrCodes\\").listFiles().length;
 		String charset = "UTF-8";
 		 String filePath = "D:\\TicketBoxBack\\rsrc\\qrCodes\\";
 		 String preEmailString="$"+QRCounter+"$"; QRCounter++;
