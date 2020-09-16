@@ -26,6 +26,8 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.project.tb.dao.TicketRepo;
 import com.project.tb.payload.TicketScanResult;
+import com.project.tb.security.AES;
+import com.project.tb.security.SecurityConstants;
 
 public class QRCodeServices {
 	
@@ -41,7 +43,7 @@ public class QRCodeServices {
 		filePath+=email;
 		qrCodeData+="&";
 		qrCodeData+=fileNameEncodedString;
-		
+		qrCodeData=AES.encrypt(qrCodeData, SecurityConstants.secretKey);
 		Map hintMap = new HashMap();
 		
 		
@@ -69,8 +71,8 @@ public class QRCodeServices {
 						ImageIO.read(new FileInputStream(filePath)))));
 		Result qrCodeResult = new MultiFormatReader().decode(binaryBitmap,
 				hintMap);
-		System.out.println(qrCodeResult.getText());
-		return qrCodeResult.getText();
+		System.out.println(AES.decrypt(qrCodeResult.getText(), SecurityConstants.secretKey));
+		return AES.decrypt(qrCodeResult.getText(), SecurityConstants.secretKey);
 	}
 	
 }
