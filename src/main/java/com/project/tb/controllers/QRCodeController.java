@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ import com.project.tb.services.QRCodeServices;
 public class QRCodeController {
 @Autowired
 QRCodeServices qrCodeServices;
-@PreAuthorize("hasRole('USER')")
+@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_DISTU"})
 @GetMapping("/findByEmail/{email}")
 public List<QRCode> findByEmail(@PathVariable String email) {
 	return qrCodeServices.findByEmail(email);
