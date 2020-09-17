@@ -30,7 +30,7 @@ import com.sun.istack.FinalArrayList;
 @Service
 public class UserServices {
 	@Autowired
-	private static UserRepo userRepo;
+	private UserRepo userRepo;
 	@Autowired
 	private TicketRepo ticketrepo;
 	@Autowired
@@ -63,6 +63,7 @@ public class UserServices {
 	// tested
 	public User findById(Long userId) {
 		Optional<User> user = userRepo.findById(userId);
+		System.out.println("xxxxxxxxxxxx");
 		User user2;
 		try {
 		user2 = user.get();}
@@ -86,10 +87,11 @@ public void addCredit(int credit, long id) {
 	userRepo.addCredit(credit, id);
 }
 public void addCreditByEmail(CreditRequest creditRequest) {
-	userRepo.addCredit(creditRequest.getCredit(), userRepo.findByEmail(creditRequest.getEmail()).getId());
+	userRepo.addCredit(creditRequest.getCredit(),
+			userRepo.getIdFromEmail(creditRequest.getEmail()));
 }
 public User findByEmail(String email) {
-	return userRepo.findByEmail(email);
+	return userRepo.findById(userRepo.getIdFromEmail(email)).get();
 }
 	public void deleteAll() {
 		userRepo.deleteAll();

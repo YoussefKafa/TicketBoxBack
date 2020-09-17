@@ -1,5 +1,7 @@
 package com.project.tb.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		// Let people login with either username or email
 		User user;
         try {
-        	 user = userRepo.findByEmail(email);
+        	 user = userRepo.findById(userRepo.getIdFromEmail(email)).get();
 		} catch (Exception e) {
 			throw new UsernameNotFoundException("User not found with email "+email);
 		}
@@ -30,8 +32,8 @@ public class CustomUserDetailsService implements UserDetailsService{
 	}
  @Transactional
  public UserDetails loadUserById(Long id) {
-	 User user=userRepo.getById(id);
+	 Optional<User> user= userRepo.findById(id);
 	 if (user==null) new UsernameNotFoundException("User not found");
-		return UserPrincipal.create(user);
+		return UserPrincipal.create(user.get());
  }
 }

@@ -122,4 +122,8 @@ public String changePassword(@Valid @RequestBody ChangePasswordRequest changePas
 	userService.changePassword(changePasswordRequest);
 	return "Password Updated successfully";
 }
+	@GetMapping("/show/getIdFromEmail/{email}")
+	public long getIdFromEmail(@PathVariable String email) {
+		return userRepository.getIdFromEmail(email);
+	}
 }

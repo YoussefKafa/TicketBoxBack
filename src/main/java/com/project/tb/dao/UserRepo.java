@@ -16,15 +16,11 @@ import com.project.tb.payload.CreditRequest;
 
 @Repository
 public interface UserRepo extends CrudRepository<User, Long> {
-	public Optional<User> findById(Long id);
-
-	public User findByEmail(String email);
-
-	public User getById(Long id);
-
+	Optional<User> findById(Long id);
 	@Query(value = "SELECT ticket_id from user_tickets where user_id=:id", nativeQuery = true)
 	public List<BigInteger> getTicketsByUserId(int id);
-
+	@Query(value="select id from user where user.email=:email", nativeQuery = true)
+     public Long getIdFromEmail(@Param("email") String email);
 	@Query(value = "SELECT COUNT(gender) from user where gender=1", nativeQuery = true)
 	public int countMaleUsers();
 

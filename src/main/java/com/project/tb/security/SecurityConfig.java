@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/api/stadium/show/**",
                 "/api/ticket/show/**",
                 "/api/game/show/**",
+                "/api/users/show/**",
                 "/api/auth/signin",
                 "/api/auth/signup",
                 "/api/gameTeams/show/**")

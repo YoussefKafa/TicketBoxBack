@@ -25,7 +25,6 @@ public class BookRequests extends DateAudit {
 	@Column(name = "ticket_id")
 	private Long ticketId;
 	@Column(name = "email")
-	@JsonIgnore
 	private String email;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "bookRequest")
 	@JsonIgnore

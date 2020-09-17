@@ -32,13 +32,12 @@ public class BookRequestsService {
 		return bookRequestRepo.findByEmail(email);
 	}
 	public void save(BookRequests bookRequest) throws WriterException, IOException {
-	
 		Optional<Ticket> tikTicket=ticketRepo.findById(bookRequest.getTicketId());
 		int price=tikTicket.get().getPrice();
-		User user=userRepo.findByEmail(bookRequest.getEmail());
-		int credit=user.getCredit();
+		Optional<User> user=userRepo.findById(userRepo.getIdFromEmail(bookRequest.getEmail()));
+		int credit=user.get().getCredit();
 		if(credit>=price) {
-		userRepo.decreaseCredit(price, userRepo.findByEmail(bookRequest.getEmail()).getId());}
+		userRepo.decreaseCredit(price, userRepo.findById(userRepo.getIdFromEmail(bookRequest.getEmail())).get().getId());}
 		else {
 			throw new ModelException("Dear User: You don't have enough credit!");
 		}
