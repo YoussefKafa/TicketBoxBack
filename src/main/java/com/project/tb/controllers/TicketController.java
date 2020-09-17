@@ -24,7 +24,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
-import com.project.tb.services.QRCodeServices;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/ticket")
@@ -75,9 +74,5 @@ public ResponseEntity<?> addGame(@PathVariable Long ticket_id,@PathVariable Long
 	 ticketService.addGame(ticket_id,game_id);
 	 Optional<Ticket> ticket=ticketService.findById(ticket_id);
 	 return new ResponseEntity<Ticket>(ticket.get(),HttpStatus.CREATED);
-}
-@GetMapping("/confirm")
-public TicketScanResult findById(@Valid @RequestBody ConfirmTicketRequest confirmTicketRequest){
-	return ticketService.scan(confirmTicketRequest.getContent());
 }
 }

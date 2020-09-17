@@ -1,21 +1,21 @@
 package com.project.tb.services;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.google.zxing.WriterException;
 import com.project.tb.dao.BookRequestRepo;
 import com.project.tb.dao.GameRepo;
+import com.project.tb.dao.QRCodeRepo;
 import com.project.tb.dao.TicketRepo;
 import com.project.tb.dao.UserRepo;
 import com.project.tb.exceptions.ModelException;
+import com.project.tb.models.QRCode;
 import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
 import com.project.tb.payload.BookRequests;
+import com.project.tb.security.AES;
+import com.project.tb.security.SecurityConstants;
 public class BookRequestsService {
 	@Autowired
 	BookRequestRepo bookRequestRepo;
@@ -25,6 +25,8 @@ public class BookRequestsService {
 	UserRepo userRepo;
 	@Autowired
 	GameRepo gameRepo;
+	@Autowired
+	QRCodeRepo qrCodeRepo;
 	public List<BookRequests> findByEmail(String email)
 	{
 		return bookRequestRepo.findByEmail(email);
@@ -42,8 +44,11 @@ public class BookRequestsService {
 		}
 		gameRepo.increaseSaleCounter(tikTicket.get().getGame().getId());
 		ticketRepo.decreaseCounter(bookRequest.getTicketId());
-		QRCodeServices.createQRCode(user.getName()+"$"+tikTicket.get().getTicketSequence(), user.getEmail()+"#"+tikTicket.get().getTicketSequence());
 		bookRequestRepo.save(bookRequest);
+		String qrCodeData=bookRequest.getEmail()+"$"+tikTicket.get().getTicketSequence()+"#"+bookRequest.getId();
+		String encodedQrCodeData=AES.encrypt(qrCodeData, SecurityConstants.secretKey);
+		QRCode qrCode =new QRCode(bookRequest.getEmail(), tikTicket.get().getTicketSequence(), QRGenerator.createQR(encodedQrCodeData), bookRequest);
+		qrCodeRepo.save(qrCode);
 	}
 	public void delete(Long id) {
 		bookRequestRepo.deleteById(id);

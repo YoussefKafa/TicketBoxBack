@@ -80,26 +80,6 @@ public class TicketServices {
 	public boolean existsByTicketSequence(String ticketSequence) {
 		return ticketRepo.existsByTicketSequence(ticketSequence);
 	}
-	public TicketScanResult scan(String content) {
-		
-		try {
-			String preFilePath="D:\\TicketBoxBack\\rsrc\\qrCodes\\";
-			String fileName=content.substring(content.indexOf("&")+1, content.length());
-			String fullPath=preFilePath+=fileName;
-			String name=content.substring(0, content.indexOf("$"));
-			String ticketSequence=content.substring(content.indexOf("$")+1, content.indexOf("&"));
-			String email=content.substring(content.indexOf("&")+1,content.indexOf("#"));
-			boolean isTicketSequence=false,isEmail=false,isFile=false;
-			isTicketSequence=ticketRepo.existsByTicketSequence(ticketSequence);
-		File tryFile=new File(fullPath);
-		if(tryFile.exists()) isFile=true;
-		isEmail=userRepo.existsByEmail(email);
-			boolean confirmed=isTicketSequence&&isEmail&&isFile;
-			return new TicketScanResult(name,ticketSequence,fullPath,email,confirmed);
-		} catch (Exception e) {
-			throw new ModelException("Enter a valid Ticket QR");
-		}
-	}
 		
 	}
 	
