@@ -66,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/api/users/show/**",
                 "/api/auth/signin",
                 "/api/auth/signup",
+                "/api/complaint/save",
                 "/api/gameTeams/show/**")
                 .permitAll()
             .anyRequest()

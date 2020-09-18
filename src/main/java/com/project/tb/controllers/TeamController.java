@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
-
-import com.project.tb.models.Stadium;
 import com.project.tb.models.Team;
 import com.project.tb.services.TeamServices;
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -34,7 +31,7 @@ private MapValidationErrorService mapvalidationErrorService;
 public ResponseEntity<?> save(@Valid @RequestBody Team team, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
       if (errorMap!=null) return errorMap;
-    Team team1=teamService.saveOrUpdate(team);
+      teamService.saveOrUpdate(team);
 return new ResponseEntity<Team>(team,HttpStatus.CREATED);
 }
 @GetMapping("/show/findAll")
