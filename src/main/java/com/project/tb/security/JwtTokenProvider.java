@@ -8,9 +8,10 @@ import com.project.tb.wrappers.UserPrincipal;
 import java.util.Date;
 @Component
 public class JwtTokenProvider {
-
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
-
+    
+    
+    
     public String generateToken(Authentication authentication) {
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
@@ -25,6 +26,11 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
                 .compact();
     }
+    
+    
+    
+    
+    
     public Long getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey( SecurityConstants.SECRET)

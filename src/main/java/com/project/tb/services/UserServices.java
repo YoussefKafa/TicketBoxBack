@@ -10,23 +10,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import com.project.tb.dao.*;
 import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
 import com.project.tb.payload.ChangePasswordRequest;
 import com.project.tb.payload.CreditRequest;
-import com.sun.istack.FinalArrayList;
-
 @Service
 public class UserServices {
 	@Autowired
@@ -133,4 +125,4 @@ public User findByEmail(String email) {
 	public boolean existsByEmail(String email) {
 		return userRepo.existsByEmail(email);
 	}
-}
+	}

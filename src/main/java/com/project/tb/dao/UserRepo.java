@@ -23,7 +23,6 @@ public interface UserRepo extends CrudRepository<User, Long> {
      public Long getIdFromEmail(@Param("email") String email);
 	@Query(value = "SELECT COUNT(gender) from user where gender=1", nativeQuery = true)
 	public int countMaleUsers();
-
 	@Query(value = "SELECT COUNT(gender) from user where gender=0", nativeQuery = true)
 	public int countFemaleUsers();
 	@Query(value = "select id from roles where name=:name", nativeQuery = true)

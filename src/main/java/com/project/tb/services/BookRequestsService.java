@@ -17,6 +17,7 @@ import com.project.tb.payload.BookRequests;
 import com.project.tb.security.AES;
 import com.project.tb.security.SecurityConstants;
 public class BookRequestsService {
+
 	@Autowired
 	BookRequestRepo bookRequestRepo;
 	@Autowired
@@ -52,4 +53,5 @@ public class BookRequestsService {
 	public void delete(Long id) {
 		bookRequestRepo.deleteById(id);
 	}
+
 }

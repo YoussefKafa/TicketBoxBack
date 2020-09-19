@@ -10,6 +10,8 @@ import com.project.tb.models.Complaint;
 public class ComplaintServices {
 @Autowired
 ComplaintRepo complaintRepo;
+@Autowired
+BookRequestsService bookRequestsService;
 public Complaint saveOrUpdate(final Complaint complaint) {
     return complaintRepo.save(complaint);
 }
