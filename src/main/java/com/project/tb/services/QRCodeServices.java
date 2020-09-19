@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.tb.dao.BookRequestRepo;
 import com.project.tb.dao.QRCodeRepo;
+import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.QRCode;
 import com.project.tb.security.AES;
 import com.project.tb.security.SecurityConstants;
@@ -23,14 +24,20 @@ public List<QRCode> findByEmail(String email){
 	return qrCodeRepo.findByEmail(email);
 }
 public boolean confirm(String content) {
-	boolean bookRequestExists;
-	Integer qrCodeExists;
+	boolean bookRequestExists=false;
 	boolean confirmed=false;
-	String decryptContent=AES.decrypt(content, SecurityConstants.secretKey);
-	String bookId=decryptContent.substring(decryptContent.indexOf("#")+1);
-	bookRequestExists=bookRequestRepo.existsById(Long.parseLong(bookId));
-    qrCodeExists=qrCodeRepo.findByBookId(Long.parseLong(bookId));
-  boolean qrCodeExistsBoolean=false;
+	boolean qrCodeExistsBoolean=false;
+	Integer qrCodeExists=0;
+	String bookId="";
+	String decryptContent="";
+	try {
+		decryptContent=AES.decrypt(content, SecurityConstants.secretKey);
+		 bookId=decryptContent.substring(decryptContent.indexOf("#")+1);
+		bookRequestExists=bookRequestRepo.existsById(Long.parseLong(bookId));
+	    qrCodeExists=qrCodeRepo.findByBookId(Long.parseLong(bookId));
+	} catch (Exception e) {
+	throw new ModelException("Invalid Ticket");
+	}
   if(qrCodeExists>0) qrCodeExistsBoolean=true;
 	if(bookRequestExists && qrCodeExistsBoolean) {confirmed =true;
 		qrCodeRepo.deleteByBookId(Long.parseLong(bookId));}
