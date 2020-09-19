@@ -35,7 +35,6 @@ public class TicketServices {
 	        	ticket22.setReturnDate(ticket.getReturnDate());
 	        	ticket22.setReturnable(ticket.isReturnable());
 	        	ticket22.setTicketSequence(ticket.getTicketSequence());
-	        	ticket22.setQrCode(ticket.getQrCode());
 	        	return ticketRepo.save(ticket22);
 	        }
 	        } catch (final Exception e) {

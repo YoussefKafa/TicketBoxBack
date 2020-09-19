@@ -28,7 +28,6 @@ public class Ticket extends DateAudit implements Serializable{
 	// we are going to use it to find an individual ticket in the TicketsList
 	private String ticketSequence;
 	private String gates;
-	private String qrCode;
 	private int price;
 	private int counter;
 	private boolean returnable;
@@ -57,12 +56,6 @@ public class Ticket extends DateAudit implements Serializable{
 	}
 	public void setUsers(java.util.Set<User> users) {
 		this.users = users;
-	}
-	public String getQrCode() {
-		return qrCode;
-	}
-	public void setQrCode(String qrCode) {
-		this.qrCode = qrCode;
 	}
 	public Long getId() {
 		return id;

@@ -16,6 +16,7 @@ import com.project.tb.services.CreditRequestServices;
 public class TestApp {
 	@Bean
 	BCryptPasswordEncoder bCryptPasswordEncoder() {
+		
 		return new BCryptPasswordEncoder();
 	}
 	@Bean
