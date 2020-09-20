@@ -10,7 +10,6 @@ import com.project.tb.dao.TicketRepo;
 import com.project.tb.dao.UserRepo;
 import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
-import com.project.tb.payload.TicketScanResult;
 @Service
 public class TicketServices {
 	 @Autowired

@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import com.project.tb.models.Ticket;
-import com.project.tb.payload.ConfirmTicketRequest;
-import com.project.tb.payload.TicketScanResult;
 import com.project.tb.services.TicketServices;
 
 import java.math.BigInteger;

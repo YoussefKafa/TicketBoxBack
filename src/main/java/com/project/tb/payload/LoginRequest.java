@@ -1,7 +1,4 @@
 package com.project.tb.payload;
-
-import javax.validation.constraints.NotBlank;
-
 public class LoginRequest {
     private String email;
     private String password;

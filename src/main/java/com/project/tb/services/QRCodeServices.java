@@ -9,6 +9,7 @@ import com.project.tb.dao.BookRequestRepo;
 import com.project.tb.dao.QRCodeRepo;
 import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.QRCode;
+import com.project.tb.payload.ConfirmTicketResponse;
 import com.project.tb.security.AES;
 import com.project.tb.security.SecurityConstants;
 @Service
@@ -23,9 +24,11 @@ public void confirm() {
 public List<QRCode> findByEmail(String email){
 	return qrCodeRepo.findByEmail(email);
 }
-public boolean confirm(String content) {
+public ConfirmTicketResponse confirm(String content) {
+	ConfirmTicketResponse confirmTicketResponse=new ConfirmTicketResponse();
+	String type="";
 	boolean bookRequestExists=false;
-	boolean confirmed=false;
+	confirmTicketResponse.setType("false");
 	boolean qrCodeExistsBoolean=false;
 	Integer qrCodeExists=0;
 	String bookId="";
@@ -36,12 +39,14 @@ public boolean confirm(String content) {
 		bookRequestExists=bookRequestRepo.existsById(Long.parseLong(bookId));
 	    qrCodeExists=qrCodeRepo.findByBookId(Long.parseLong(bookId));
 	} catch (Exception e) {
-	throw new ModelException("Invalid Ticket");
+		confirmTicketResponse.setType("invalid");
+	return confirmTicketResponse;
 	}
   if(qrCodeExists>0) qrCodeExistsBoolean=true;
-	if(bookRequestExists && qrCodeExistsBoolean) {confirmed =true;
+	if(bookRequestExists && qrCodeExistsBoolean) {type="true";
+	confirmTicketResponse.setType(type);
 		qrCodeRepo.deleteByBookId(Long.parseLong(bookId));}
-	return confirmed;
+	return confirmTicketResponse;
 
 }
 }

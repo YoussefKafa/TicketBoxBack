@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.tb.models.QRCode;
 import com.project.tb.payload.ConfirmRequest;
+import com.project.tb.payload.ConfirmTicketResponse;
 import com.project.tb.services.QRCodeServices;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,7 +31,7 @@ public List<QRCode> findByEmail(@PathVariable String email) {
 }
 @PreAuthorize("hasRole('ADMIN')")
 @PostMapping("/conf")
-public boolean confirm(@Valid @RequestBody ConfirmRequest confirmRequest) {
+public ConfirmTicketResponse confirm(@Valid @RequestBody ConfirmRequest confirmRequest) {
 	return qrCodeServices.confirm(confirmRequest.getContent());
 }
 }
