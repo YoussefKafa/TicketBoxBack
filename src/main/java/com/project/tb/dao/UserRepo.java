@@ -58,6 +58,10 @@ public interface UserRepo extends CrudRepository<User, Long> {
 	@Modifying
 	@Query("UPDATE User s  set s.credit =s.credit-:price where s.id = :id")
 	void decreaseCredit(int price,Long id);
+	@Transactional
+	@Modifying
+	@Query("UPDATE User s  set s.credit =s.credit+:price where s.id = :id")
+	void increaseCredit(int price,Long id);
 	@Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM User c WHERE c.email = :email")
     boolean existsByEmail(@Param("email") String email);
 }

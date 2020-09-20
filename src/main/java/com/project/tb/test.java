@@ -1,17 +1,19 @@
 package com.project.tb;
 
-import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import com.google.zxing.WriterException;
-import com.project.tb.security.AES;
-import com.project.tb.security.SecurityConstants;
-import com.project.tb.services.QRGenerator;
+import javassist.expr.NewArray;
 
 public class test {
 
-	public static void main(String[] args) throws WriterException, IOException {
-	System.out.println(AES.encrypt("golden DrBaseemBarhom", SecurityConstants.secretKey));
-	System.out.println(QRGenerator.createQR(AES.encrypt("golden DrBaseemBarhom", SecurityConstants.secretKey)));
+	public static void main(String[] args) throws ParseException {
+		Date date = new Date();  
+	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+	    String strDate= formatter.format(date);  
+	    System.out.println(strDate);
+	
 	}
 
 }

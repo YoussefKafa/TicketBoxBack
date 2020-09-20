@@ -1,31 +1,33 @@
 package com.project.tb.services;
-import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.project.tb.dao.BookRequestRepo;
 import com.project.tb.dao.TicketRepo;
 import com.project.tb.dao.UserRepo;
 import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
+import com.project.tb.payload.ReturnTicketRequest;
 @Service
 public class TicketServices {
 	 @Autowired
 	    private TicketRepo ticketRepo;
 	 @Autowired
 	    private UserRepo userRepo;
+	 @Autowired
+	 private BookRequestRepo bookRequestRepo;
 		public Ticket saveOrUpdate(final Ticket ticket) {
 	        try {
 	        if(ticket.getId()==null) {
 	            return ticketRepo.save(ticket);}
 	        else {
-	        
 	        	Optional<Ticket> ticket2=ticketRepo.findById(ticket.getId());
 	        	Ticket ticket22=ticket2.get();
-	        	System.out.println(ticket22.getCreatedAt());
-	        	Date updateDate=new Date();
 	        	ticket22.setCounter(ticket.getCounter());
 	        	ticket22.setEndDate(ticket.getEndDate());
 	        	ticket22.setGates(ticket.getGates());
@@ -38,8 +40,7 @@ public class TicketServices {
 	        }
 	        } catch (final Exception e) {
 	            throw new ModelException("Ticket  "+ ticket.getId()+ " is already exists"+e.getMessage());
-	        }
-	        
+	        } 
 	    }
 	    public List<Ticket> findAll() {
 	        Iterable<Ticket> it = ticketRepo.findAll();
@@ -59,7 +60,6 @@ public class TicketServices {
 	    public void deleteAll(Ticket ticket) {
 	        ticketRepo.delete(ticket);
 	     }
-	    //getter & setters
 	    public TicketRepo getTicketRepo() {
 			return ticketRepo;
 		}
@@ -77,7 +77,40 @@ public class TicketServices {
 		}
 	public boolean existsByTicketSequence(String ticketSequence) {
 		return ticketRepo.existsByTicketSequence(ticketSequence);
+	}	
+	public boolean returnTicket(ReturnTicketRequest returnTicketRequest) {
+		boolean result=false;
+		Date date = new Date();  
+	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+	    String strDate= formatter.format(date);
+	    Long returnDay=Long.parseLong(returnTicketRequest.getReturnDate().substring(0, returnTicketRequest.getReturnDate().indexOf("/")));
+	    System.out.println(returnDay);
+	    Long nowDay=Long.parseLong(strDate.substring(0, strDate.indexOf("/")));
+	    System.out.println(nowDay);
+	    System.out.println(returnTicketRequest.getReturnDate());
+	    System.out.println(returnTicketRequest.getReturnDate().substring(3,6));
+	  Long returnMonth=Long.parseLong(returnTicketRequest.getReturnDate().substring(3,5));
+	  System.out.println(returnMonth);
+	  Long nowMonth=Long.parseLong(strDate.substring(3,5));
+	  System.out.println(nowMonth);
+	  if(returnMonth>=nowMonth ) { result=true;
+		ticketRepo.increaseCounter(Long.parseLong(returnTicketRequest.getTicketId()));
+		userRepo.increaseCredit(returnTicketRequest.getPrice(), Long.parseLong(returnTicketRequest.getUserId()));
+		bookRequestRepo.deleteById(Long.parseLong(returnTicketRequest.getBrId()));
+		return true;
+	  }
+	  if(returnMonth==nowMonth ) { 
+		  if(returnDay>=nowDay) {result=true;
+		ticketRepo.increaseCounter(Long.parseLong(returnTicketRequest.getTicketId()));
+		userRepo.increaseCredit(returnTicketRequest.getPrice(), Long.parseLong(returnTicketRequest.getUserId()));
+		bookRequestRepo.deleteById(Long.parseLong(returnTicketRequest.getBrId()));
+		return true;}
+		  if(returnMonth<nowMonth ) { 
+			  result=false;
+			 return false;}
+		  
+	  }
+		return result;
 	}
-		
-	}
+}
 	

@@ -39,14 +39,12 @@ private GameRepo gameRepo;
 public ResponseEntity<?> addGame(@Valid @RequestBody Game game, BindingResult result){
       ResponseEntity<?> errorMap=mapvalidationErrorService.mapValidationErrorService(result);
       if (errorMap!=null) return errorMap;
-  	System.out.println(game.toString()+" ---------------------------");
     Game game2=gameService.saveOrUpdate(game);
 return new ResponseEntity<Game>(game,HttpStatus.CREATED);
 }
 @Secured({ "ROLE_ADMIN"})
 @PutMapping("/save")
 public void updateGame(@Valid @RequestBody Game game, BindingResult result){
-	System.out.println(game.toString()+" ++++++++++++++++++++++++++++++++++++++++++++++==");
     Game game2=gameService.saveOrUpdate(game);
 }
 @GetMapping("/show/findAll")

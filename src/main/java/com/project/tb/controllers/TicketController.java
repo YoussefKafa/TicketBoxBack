@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import com.project.tb.models.Ticket;
+import com.project.tb.payload.ReturnTicketRequest;
 import com.project.tb.services.TicketServices;
-
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -73,4 +71,11 @@ public ResponseEntity<?> addGame(@PathVariable Long ticket_id,@PathVariable Long
 	 Optional<Ticket> ticket=ticketService.findById(ticket_id);
 	 return new ResponseEntity<Ticket>(ticket.get(),HttpStatus.CREATED);
 }
+@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_DISTU"})
+@PostMapping("/returnTicket")
+public boolean returnTicket(@Valid @RequestBody ReturnTicketRequest returnTicketRequest) {
+	boolean result=ticketService.returnTicket(returnTicketRequest); 
+	 return result;
+}
+
 }

@@ -27,7 +27,10 @@ public interface TicketRepo extends CrudRepository <Ticket , Long>{
 	@Modifying
 	@Query(value="UPDATE ticket SET counter=counter -1 where ticket_id=:ticketId",nativeQuery = true)
 void decreaseCounter(@Param("ticketId") Long ticketId);
-	
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE ticket SET counter=counter +1 where ticket_id=:ticketId",nativeQuery = true)
+void increaseCounter(@Param("ticketId") Long ticketId);
 	@Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Ticket c WHERE c.ticketSequence = :ticketSequence")
     boolean existsByTicketSequence(@Param("ticketSequence") String ticketSequence);
 }

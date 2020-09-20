@@ -1,13 +1,9 @@
 package com.project.tb.services;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.project.tb.dao.BookRequestRepo;
 import com.project.tb.dao.QRCodeRepo;
-import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.QRCode;
 import com.project.tb.payload.ConfirmTicketResponse;
 import com.project.tb.security.AES;
