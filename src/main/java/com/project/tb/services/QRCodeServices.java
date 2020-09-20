@@ -35,6 +35,10 @@ public ConfirmTicketResponse confirm(String content) {
 	String decryptContent="";
 	try {
 		decryptContent=AES.decrypt(content, SecurityConstants.secretKey);
+		if(decryptContent.contains("golden")) {
+			confirmTicketResponse.setType("golden");
+			return confirmTicketResponse;
+		}
 		 bookId=decryptContent.substring(decryptContent.indexOf("#")+1);
 		bookRequestExists=bookRequestRepo.existsById(Long.parseLong(bookId));
 	    qrCodeExists=qrCodeRepo.findByBookId(Long.parseLong(bookId));
