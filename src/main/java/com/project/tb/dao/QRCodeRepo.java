@@ -19,5 +19,6 @@ List<QRCode> findByEmail(String email);
 void deleteByBookId(@Param("bookId") Long bookId);
 @Query(value="select case when (count(\"scen\") > 0)  then true else false end from QRCode scen where scen.book_id=:bookId",nativeQuery = true)
 Integer findByBookId(Long bookId);
-
+@Query(value="select id from QRCode where book_id=:bookId", nativeQuery = true)
+public Long getIdFromBookId(@Param("bookId") String bookId);
 }
