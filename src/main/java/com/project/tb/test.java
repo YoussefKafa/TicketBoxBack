@@ -9,11 +9,10 @@ import javassist.expr.NewArray;
 public class test {
 
 	public static void main(String[] args) throws ParseException {
-		Date date = new Date();  
-	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
-	    String strDate= formatter.format(date);  
-	    System.out.println(strDate);
-	
+		String xString="hi";
+		int x=10;
+		xString+=10;
+		System.out.println(xString);
 	}
 
 }

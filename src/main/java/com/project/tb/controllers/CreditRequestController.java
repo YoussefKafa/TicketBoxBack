@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.project.tb.dao.CreditRequestRepo;
-import com.project.tb.dao.UserRepo;
 import com.project.tb.payload.CreditRequest;
 import com.project.tb.services.CreditRequestServices;
 import com.project.tb.services.UserServices;
@@ -22,8 +20,6 @@ public class CreditRequestController {
 	private UserServices userService;
 	@Autowired
 	private CreditRequestServices creditRequestServices;
-	@Autowired
-	private CreditRequestRepo creditRequestRepo;
 	@Secured({"ROLE_DISTU","ROLE_ADMIN"})
 	@PostMapping("/admin/addCreditByEmail")
 	public void addCredit(@RequestBody CreditRequest creditRequest) {

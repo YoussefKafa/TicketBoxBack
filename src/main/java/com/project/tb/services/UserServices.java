@@ -1,10 +1,6 @@
 package com.project.tb.services;
 
 import java.math.BigInteger;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.project.tb.dao.*;
 import com.project.tb.exceptions.ModelException;
+import com.project.tb.models.ReturnPasswordCodeModel;
 import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
+import com.project.tb.payload.ChangeForgPassword;
 import com.project.tb.payload.ChangePasswordRequest;
 import com.project.tb.payload.CreditRequest;
 @Service
@@ -27,6 +25,10 @@ public class UserServices {
 	private TicketRepo ticketrepo;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; // comes with spring security
+	@Autowired
+	private EmailServices emailServices;
+	@Autowired
+	private ReturnPasswordCodeModelServices returnPasswordCodeModelServices;
 	public User saveUser(User user) throws Exception {
 		Optional<User>user1 =userRepo.findById(user.getId());
 		System.out.println(bCryptPasswordEncoder.matches(user.getPassword(), user1.get().getPassword()));
@@ -122,7 +124,29 @@ public User findByEmail(String email) {
 		}
 		userRepo.changePassword(bCryptPasswordEncoder.encode(changePasswordRequest.getNewPass()), Long.parseLong(changePasswordRequest.getIdOfUser()));
 	}
+	public void returnPassword(ChangeForgPassword changeForgPassword) {
+		String email=changeForgPassword.getEmail();
+		Long id=returnPasswordCodeModelServices.getIdFromEmail(email);
+		Optional<ReturnPasswordCodeModel> returnPasswordCodeModel=returnPasswordCodeModelServices.findById(id);
+		if(changeForgPassword.getCode()==returnPasswordCodeModel.get().getCode()) {
+			userRepo.changePassword(bCryptPasswordEncoder.encode(changeForgPassword.getNewPassword()),userRepo.getIdFromEmail(changeForgPassword.getEmail()));
+			returnPasswordCodeModelServices.deleteById(returnPasswordCodeModelServices.getIdFromEmail(email));
+		}
+		else {
+			throw new ModelException("Invalid Code");
+		}
+	}
+	public void forgetPassword(String email) {
+		int min=1; int max=1000000;
+		int random_int = (int)(Math.random() * (max - min + 1) + min);
+	ReturnPasswordCodeModel returnPasswordCodeModel=new ReturnPasswordCodeModel();
+	returnPasswordCodeModel.setCode(random_int);
+	returnPasswordCodeModel.setEmail(email);
+	returnPasswordCodeModelServices.saveOrUpdate(returnPasswordCodeModel);
+		emailServices.sendMessage(email,random_int);
+	}
 	public boolean existsByEmail(String email) {
 		return userRepo.existsByEmail(email);
 	}
+	
 	}

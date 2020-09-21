@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.validation.BindingResult;
 import com.project.tb.dao.CreditRequestRepo;
+import com.project.tb.dao.ReturnPasswordCodeModelRepo;
 import com.project.tb.dao.UserRepo;
 import com.project.tb.exceptions.ModelException;
 import com.project.tb.models.Ticket;
 import com.project.tb.models.User;
+import com.project.tb.payload.ChangeForgPassword;
 import com.project.tb.payload.ChangePasswordRequest;
 import com.project.tb.services.UserServices;
 import javax.validation.Valid;
 import com.project.tb.services.MapValidationErrorService;
+import com.project.tb.services.ReturnPasswordCodeModelServices;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +39,8 @@ class UserController {
 	private UserServices userService;
 	@Autowired
 	private UserRepo userRepository;
+	@Autowired
+	private ReturnPasswordCodeModelServices returnPasswordCodeModelServices;
 	@Autowired
 	private CreditRequestRepo creditRequestRepo;
 	@Secured({"ROLE_USER","ROLE_ADMIN","ROLE_DISTU"})
@@ -121,8 +127,31 @@ public String changePassword(@Valid @RequestBody ChangePasswordRequest changePas
 	userService.changePassword(changePasswordRequest);
 	return "Password Updated successfully";
 }
+	@PostMapping("/show/returnPassword")
+	public String changeForgPassword(@Valid @RequestBody ChangeForgPassword changeForgPassword) {
+		try {
+			userService.returnPassword(changeForgPassword);
+		} catch (Exception e) {
+		throw new ModelException("Incorrect Information");
+		}
+		return "Password Updated successfully";
+	}
+	@GetMapping("/show/sendCodeMessage/{email}")
+	public String changePassword(@PathVariable String email) {
+		userService.forgetPassword(email);
+		return "Please Check Your Email";
+	}
 	@GetMapping("/show/getIdFromEmail/{email}")
 	public long getIdFromEmail(@PathVariable String email) {
 		return userRepository.getIdFromEmail(email);
+	}
+	@DeleteMapping("/show/deleteForgEmail/{email}")
+	public void deleteForgEmail(@PathVariable String email) {
+		try {
+			returnPasswordCodeModelServices.deleteById(returnPasswordCodeModelServices.getIdFromEmail(email)); 
+
+		} catch (Exception e) {
+			throw new ModelException("Invalid Date");
+		}
 	}
 }

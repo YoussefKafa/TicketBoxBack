@@ -20,4 +20,15 @@ public class EmailServices {
 	        message.setText(text);
 	        emailSender.send(message);
 	}
+	public void sendMessage(String userEmail, int code) {
+		String text="Your Code is : ";
+		String email=userEmail;
+		   SimpleMailMessage message = new SimpleMailMessage(); 
+	        message.setFrom("TicketBoxSy@gmail.com");
+	        message.setTo(email); 
+	        message.setSubject("TicketBox Return Code"); 
+	        text+=code;
+	        message.setText(text);
+	        emailSender.send(message);
+	}
 }
