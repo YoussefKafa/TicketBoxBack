@@ -24,18 +24,14 @@ public class QRCode {
 	}
 	@Id
 	@GeneratedValue
-	@JsonIgnore
 	private Long id;
-	@JsonIgnore
 	private String email;
-	@JsonIgnore
 	private String ticketSequence;
 	@Lob
 	@Column(name="image", nullable=true, columnDefinition="mediumblob")//medium is 16mb
 	private String image;
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "book_id", nullable = false)
-	@JsonIgnore
 	private BookRequests bookRequest;
 	public Long getId() {
 		return id;

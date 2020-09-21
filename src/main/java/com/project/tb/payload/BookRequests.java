@@ -27,6 +27,7 @@ public class BookRequests extends DateAudit {
 	@Column(name = "email")
 	private String email;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "bookRequest")
+	@JsonIgnore
 	private QRCode qrCode;
 	public Long getId() {
 		return id;
